@@ -66,16 +66,14 @@ interface expandedRows {
                         
                                 SL
                             <div class="flex flex-col ml-2">
-                                <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
+                                <i class="ri-expand-up-down-line font-xl text-gray-500"></i>
                             </div>
                         </th>
                         <th style="min-width:150px" pSortableColumn="id">
                             <div class="flex items-center">
                                 REASON CODE
                                 <div class="flex flex-col ml-2">
-                                    <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
+                                    <i class="ri-expand-up-down-line"></i>
                                 </div>
                             </div>
                         </th>
@@ -86,6 +84,28 @@ interface expandedRows {
                                     <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
                                     <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
                                 </div>
+                            </div>
+                        </th>
+                          <th style="min-width: 14rem">
+                            <div class="flex justify-between items-center">
+                                CMR
+                                <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template #header>
+                                        <div class="px-4 pt-4 pb-0">
+                                            <span class="font-bold">Agent Picker</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #filter let-value let-filter="filterCallback">
+                                        <p-multi-select [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" styleClass="w-full">
+                                            <ng-template let-option #item>
+                                                <div class="flex items-center gap-2 w-44">
+                                                    <img [alt]="option.label" src="/demo/images/avatar/{{ option.image }}" width="32" />
+                                                    <span>{{ option.name }}</span>
+                                                </div>
+                                            </ng-template>
+                                        </p-multi-select>
+                                    </ng-template>
+                                </p-columnFilter>
                             </div>
                         </th>
                         <th style="min-width:250px" pSortableColumn="date">
@@ -143,12 +163,17 @@ interface expandedRows {
                             </div>
                         </th>
                         <th style="min-width:150px" pSortableColumn="status">
-                            <div class="flex items-center">
+                            <div class="flex justify-between items-center">
                                 Status
-                                <div class="flex flex-col ml-2">
-                                    <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
-                                </div>
+                                <p-columnFilter field="status" matchMode="equals" display="menu">
+                                    <ng-template #filter let-value let-filter="filterCallback">
+                                        <p-select [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [style]="{ 'min-width': '12rem' }">
+                                            <ng-template let-option #item>
+                                                <span [class]="'customer-badge status-' + option.value">{{ option.label }}</span>
+                                            </ng-template>
+                                        </p-select>
+                                    </ng-template>
+                                </p-columnFilter>
                             </div>
                         </th>
                         <th style="min-width:200px" pSortableColumn="activity">
@@ -169,10 +194,9 @@ interface expandedRows {
                                 </div>
                             </div>
                         </th>
-                        <th style="min-width:95px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen" [ngClass]="{ 'font-bold': balanceFrozen }">
-                            <div class="flex items-center justify-start">
-                                
-                                Balance
+                        <th style="min-width:85px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen" [ngClass]="{ 'font-bold': balanceFrozen }">
+                            <div class="flex justify-between items-center">
+                                Action
                             </div>
                         </th>
                     </tr>
@@ -184,13 +208,23 @@ interface expandedRows {
                         </td>
                         <td style="min-width:100px">{{ customer.id }}</td>
                         <td>{{ customer.country.name }}</td>
+                         <td>
+                            <div class="flex items-center gap-2">
+                                <img [alt]="customer.representative.name" src="/demo/images/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                                <span class="image-text">{{ customer.representative.name }}</span>
+                            </div>
+                        </td>
                         <td>{{ customer.date }}</td>
                         <td>{{ customer.company }}</td>
-                        <td>{{ customer.status }}</td>
+                        <td>
+                            <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status)" />
+                        </td>
                         <td>{{ customer.activity }}</td>
                         <td>{{ customer.representative.name }}</td>
                         <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen" [ngClass]="{ 'font-bold': balanceFrozen }">
-                            {{ formatCurrency(customer.balance) }}
+                            <span class="flex justify-center items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 24 24" fill="rgba(6,148,162,1)"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
+                            </span>
                         </td>
                     </tr>
                 </ng-template>
