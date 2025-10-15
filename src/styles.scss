@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+@use './tailwind.css';
+@use './assets/layout/layout.scss';
+@use 'primeicons/primeicons.css';
+@use './assets/demo/demo.scss';
+@plugin "tailwindcss-primeui";
+@custom-variant dark (&:where(.app-dark, .app-dark *));
+
+
+/* Global PrimeNG Table Header Styling */
+.p-datatable .p-datatable-thead > tr > th {
+    background: #F3F4F6 !important; 
+    color: #374151 !important; 
+    border-color: #D1D5DB !important;
+    font-weight: 600;
+}
+
+.p-datatable .p-datatable-thead > tr > th:hover {
+    background: #E5E7EB !important;
+}
+
+.p-datatable-thead > tr > th.p-datatable-column-sorted{
+  background: #F3F4F6 !important; 
+  color: #374151 !important; 
+}
+.p-ripple.p-button.p-button-sm.p-component {
+    background-color: #4F46E5;
+    border-color: #4F46E5;
+    color: #FFFFFF;
+}
+
+.p-checkbox-checked .p-checkbox-box{
+    background-color: #4F46E5!important;
+    border-color: #4F46E5!important;
+}
+
+.p-button-icon-only.p-button-rounded{
+    height: .5rem!important;
+    border:none!important;  
+    background-color: transparent!important;
+    align-items: center!important;
+}
+.p-button-text.p-button-secondary:not(:disabled):active {
+    background-color: transparent!important;
+}
+
+/* Custom Button Component Global Styles */
+@import './app/custom/components/custom-button/custom-button.component.scss';
