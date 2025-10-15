@@ -2,7 +2,6 @@ import {Routes} from '@angular/router';
 
 export default [
     { path: 'button', data: { breadcrumb: 'Button' }, loadComponent: () => import('./buttondemo').then((c) => c.ButtonDemo) },
-    { path: 'custom-button', data: { breadcrumb: 'Custom Button' }, loadComponent: () => import('../../custom/pages/custom-button-demo/custom-button-demo.component').then((c) => c.CustomButtonDemoComponent) },
     { path: 'charts', data: { breadcrumb: 'Charts' }, loadComponent: () => import('./chartdemo').then((c) => c.ChartDemo) },
     { path: 'file', data: { breadcrumb: 'File' }, loadComponent: () => import('./filedemo').then((c) => c.FileDemo) },
     { path: 'formlayout', data: { breadcrumb: 'Form Layout' }, loadComponent: () => import('./formlayoutdemo').then((c) => c.FormLayoutDemo) },

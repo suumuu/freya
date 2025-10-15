@@ -12,6 +12,7 @@ import {SplitButtonModule} from 'primeng/splitbutton';
             <div class="card flex flex-col gap-4">
                 <div class="font-semibold text-xl">Protibimbo</div>
                 <div class="flex flex-wrap gap-2">
+                    <p-button label="Create New" icon="pi pi-plus" />
                     <p-button label="Submit"></p-button>
                     <p-button label="Disabled" [disabled]="true"></p-button>
                     <p-button label="Link" class="p-button-link" />
@@ -70,7 +71,7 @@ import {SplitButtonModule} from 'primeng/splitbutton';
                     <p-buttongroup>
                         <p-button label="Save" icon="pi pi-check" />
                         <p-button label="Delete" icon="pi pi-trash" />
-                        <p-button label="Cancel" icon="pi pi-times" />
+                        <p-button label="Create New" icon="pi pi-plus" />
                     </p-buttongroup>
                 </div>
             </div>

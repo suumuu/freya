@@ -44,5 +44,7 @@
     background-color: transparent!important;
 }
 
-/* Custom Button Component Global Styles */
-@import './app/custom/components/custom-button/custom-button.component.scss';
+
+.p-button {
+    background-color: #5850EC;
+}
