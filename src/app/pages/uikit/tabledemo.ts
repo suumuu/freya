@@ -8,6 +8,7 @@ import {Table, TableModule} from 'primeng/table';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {ToastModule} from 'primeng/toast';
+import {TooltipModule} from 'primeng/tooltip';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
@@ -16,6 +17,7 @@ import {RippleModule} from 'primeng/ripple';
 import {InputIconModule} from 'primeng/inputicon';
 import {IconFieldModule} from 'primeng/iconfield';
 import {TagModule} from 'primeng/tag';
+import {ChipModule} from 'primeng/chip';
 import {CheckboxModule} from 'primeng/checkbox';
 import {Customer, CustomerService, Representative} from '@/pages/service/customer.service';
 import {Product, ProductService} from '@/pages/service/product.service';
@@ -23,22 +25,22 @@ import {Product, ProductService} from '@/pages/service/product.service';
 interface expandedRows {
     [key: string]: boolean;
 }
-
 @Component({
     selector: 'app-table-demo',
-    standalone: true,
     imports: [
         TableModule,
         MultiSelectModule,
         SelectModule,
         InputIconModule,
         TagModule,
+        ChipModule,
         CheckboxModule,
         InputTextModule,
         SliderModule,
         ProgressBarModule,
         ToggleButtonModule,
         ToastModule,
+        TooltipModule,
         CommonModule,
         FormsModule,
         ButtonModule,
@@ -49,6 +51,55 @@ interface expandedRows {
     styles: [`
         ::ng-deep .p-column-filter-menu .p-column-filter-buttonbar {
             display: none !important;
+        }
+
+        ::ng-deep .chip-success .p-chip {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        ::ng-deep .chip-info .p-chip {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        ::ng-deep .chip-warn .p-chip {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        ::ng-deep .chip-secondary .p-chip {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        ::ng-deep .chip-count .p-chip {
+            background: #e2e8f0;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        ::ng-deep .chip-count:hover .p-chip {
+            background: #cbd5e1;
+        }
+
+        ::ng-deep .p-tooltip .p-tooltip-text {
+            white-space: normal !important;
+            max-width: 300px !important;
+            min-height: auto !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+            line-height: 1.5 !important;
+            padding: 8px 12px !important;
+        }
+
+        ::ng-deep .p-tooltip .p-tooltip-text .p-chip {
+            margin-right: 4px;
+            display: inline-block;
+        }
+
+        ::ng-deep .p-tooltip {
+            z-index: 9999 !important;
         }
     `],
     template: ` 
@@ -214,8 +265,38 @@ interface expandedRows {
                                 <span class="image-text">{{ customer.representative.name }}</span>
                             </div>
                         </td>
-                        <td>{{ customer.date }}</td>
-                        <td>{{ customer.company }}</td>
+                        <td>
+                            <span
+                                pTooltip="পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে  রিপ্লেনিশমেন্টের জন্য অর্ডার করুন"
+                                tooltipPosition="top"
+                                style="display:inline-block; max-width:18rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
+                            >
+                                পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে  রিপ্লেনিশমেন্টের জন্য অর্ডার করুন
+                            </span>
+                        </td>
+                        <td>
+                            <div class="flex flex-wrap gap-1 items-center" style="max-width: 15rem;">
+                                <ng-container *ngIf="customer.types && customer.types.length > 0; else noTypes">
+                                    <ng-container *ngFor="let type of getVisibleChips(customer.types, 1).visible">
+                                        <p-chip 
+                                            [label]="type" 
+                                            styleClass="text-xs"
+                                            [ngClass]="'chip-' + getChipSeverity(type)">
+                                        </p-chip>
+                                    </ng-container>
+                                    <p-chip 
+                                        *ngIf="getVisibleChips(customer.types, 1).remaining > 0"
+                                        [label]="getVisibleChips(customer.types, 1).remaining + '+'"
+                                        styleClass="text-xs cursor-pointer chip-count"
+                                        [pTooltip]="getVisibleChips(customer.types, 1).tooltip"
+                                        tooltipPosition="top">
+                                    </p-chip>
+                                </ng-container>
+                                <ng-template #noTypes>
+                                    <p-chip label="No types" styleClass="text-xs chip-secondary"></p-chip>
+                                </ng-template>
+                            </div>
+                        </td>
                         <td>
                             <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status)" />
                         </td>
@@ -632,7 +713,25 @@ export class TableDemo implements OnInit {
             // @ts-ignore
             this.customers1.forEach((customer) => (customer.date = new Date(customer.date)));
         });
-        this.customerService.getCustomersMedium().then((customers) => (this.customers2 = customers));
+        this.customerService.getCustomersMedium().then((customers) => {
+            this.customers2 = customers;
+            // Add sample types data to each customer
+            this.customers2.forEach((customer, index) => {
+                const sampleTypes = [
+                    'Customer survey',
+                    'POSM distribution', 
+                    'Consumer Survey',
+                    'Pending',
+                    'Geo Fencing',
+                    'Audit',
+                    'Information',
+                    'Communication'
+                ];
+                // Assign 3-6 random types to each customer
+                const numTypes = Math.floor(Math.random() * 4) + 3;
+                customer.types = sampleTypes.slice(0, numTypes);
+            });
+        });
         this.customerService.getCustomersLarge().then((customers) => (this.customers3 = customers));
         this.productService.getProductsWithOrdersSmall().then((data) => (this.products = data));
 
@@ -795,5 +894,38 @@ export class TableDemo implements OnInit {
         
         // Update Select All checkbox state
         this.selectAllTypes = this.selectedTypes.length === this.types.length;
+    }
+
+    getVisibleChips(types: string[], maxVisible: number = 2): { visible: string[], remaining: number, tooltip: string } {
+        if (!types || types.length === 0) {
+            return { visible: [], remaining: 0, tooltip: '' };
+        }
+
+        const visible = types.slice(0, maxVisible);
+        const remaining = Math.max(0, types.length - maxVisible);
+        const hiddenTypes = types.slice(maxVisible);
+        
+        let tooltip = '';
+        if (remaining > 0) {
+            tooltip = hiddenTypes.join(', ');
+        }
+
+        return { visible, remaining, tooltip };
+    }
+
+    getChipSeverity(type: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' {
+        // You can customize severity based on type
+        const severityMap: { [key: string]: any } = {
+            'Customer survey': 'success',
+            'POSM distribution': 'info',
+            'Consumer Survey': 'warn',
+            'Pending': 'secondary',
+            'Geo Fencing': 'success',
+            'Audit': 'info',
+            'Information': 'warn',
+            'Communication': 'success'
+        };
+        
+        return severityMap[type] || 'success';
     }
 }
