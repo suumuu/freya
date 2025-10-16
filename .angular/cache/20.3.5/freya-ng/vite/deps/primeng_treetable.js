@@ -1,41 +1,36 @@
 import {
   Checkbox
-} from "./chunk-YUZRF3FK.js";
-import {
-  Paginator,
-  PaginatorModule
-} from "./chunk-ANJCPNHP.js";
-import "./chunk-32R5FBGK.js";
-import "./chunk-UKJNKVXU.js";
-import "./chunk-BM5JCA27.js";
-import "./chunk-5N3FMS2U.js";
-import "./chunk-YU5QVJAK.js";
-import {
-  Scroller
-} from "./chunk-KSH3UTKP.js";
-import "./chunk-HE2KOWI3.js";
-import "./chunk-4CN5EJJ6.js";
-import "./chunk-26WE2ILX.js";
-import "./chunk-2EEXA7FW.js";
-import "./chunk-UN64SLYI.js";
+} from "./chunk-KXA4KMVL.js";
 import {
   Badge,
   BadgeModule
-} from "./chunk-7UJ6UPW4.js";
-import "./chunk-ONQFUGA2.js";
-import "./chunk-QQ7HCBDO.js";
+} from "./chunk-HL5WPABS.js";
+import {
+  Paginator,
+  PaginatorModule
+} from "./chunk-OEFGWMHK.js";
+import "./chunk-QXZ5YRTZ.js";
+import "./chunk-ISZFA6BA.js";
+import "./chunk-OTYHT4BA.js";
+import "./chunk-EIGV2FR5.js";
+import "./chunk-LFYNQM7R.js";
+import {
+  Scroller
+} from "./chunk-7KIH4NC3.js";
+import "./chunk-JAPHSQJZ.js";
+import "./chunk-6WKAZXNC.js";
+import "./chunk-ST6GTRYQ.js";
+import "./chunk-K72GOPNU.js";
+import "./chunk-ZNUMPL5Q.js";
+import "./chunk-HMQE2KXM.js";
+import "./chunk-AULJRDGR.js";
 import {
   DomHandler
-} from "./chunk-VUXHBR7Y.js";
-import {
-  FormsModule,
-  NgControlStatus,
-  NgModel
-} from "./chunk-LBJKRNRD.js";
+} from "./chunk-Q2NLPPHQ.js";
 import "./chunk-BB55NINM.js";
 import {
   Ripple
-} from "./chunk-PSFGPXRF.js";
+} from "./chunk-YHN6MAG2.js";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -45,23 +40,51 @@ import {
   SortAmountDownIcon,
   SortAmountUpAltIcon,
   SpinnerIcon
-} from "./chunk-RIG3C35J.js";
+} from "./chunk-E7R6YS2X.js";
 import {
   CheckIcon
-} from "./chunk-ZN64Z63N.js";
+} from "./chunk-XI2SIRGN.js";
 import {
   BaseComponent
-} from "./chunk-3X7R6USB.js";
+} from "./chunk-MNAA6S3O.js";
 import {
   BaseStyle
-} from "./chunk-AY5DPW7U.js";
+} from "./chunk-3XZT2HEB.js";
+import "./chunk-DCRKS4SA.js";
 import {
   FilterService,
   PrimeTemplate,
   SharedModule
-} from "./chunk-VY6QECRP.js";
+} from "./chunk-4YGAGIGH.js";
+import {
+  G,
+  Ht,
+  J,
+  K,
+  O,
+  P,
+  Q,
+  Q2,
+  R,
+  W,
+  Y,
+  a,
+  bt,
+  c,
+  ct,
+  k2 as k,
+  kt,
+  pt,
+  s2 as s,
+  z
+} from "./chunk-EXUXITB2.js";
 import "./chunk-RDLP67JE.js";
 import "./chunk-P5OQKAHD.js";
+import {
+  FormsModule,
+  NgControlStatus,
+  NgModel
+} from "./chunk-LBJKRNRD.js";
 import {
   CommonModule,
   NgClass,
@@ -143,29 +166,6 @@ import "./chunk-JRFR6BLO.js";
 import {
   Subject
 } from "./chunk-MARUHEWW.js";
-import "./chunk-UKZYY4TH.js";
-import {
-  G2 as G,
-  Ht,
-  J,
-  K,
-  O,
-  P,
-  Q,
-  Q2,
-  R,
-  W,
-  Y2 as Y,
-  a,
-  bt,
-  c,
-  ct,
-  k,
-  kt,
-  pt,
-  s,
-  z2 as z
-} from "./chunk-RK2QIU6W.js";
 import {
   __spreadProps,
   __spreadValues
@@ -2975,7 +2975,7 @@ var TreeTable = class _TreeTable extends BaseComponent {
         dropIndex = dropIndex - 1;
       }
       if (allowDrop) {
-        Q(this.columns, dragIndex, dropIndex);
+        Q2(this.columns, dragIndex, dropIndex);
         this.onColReorder.emit({
           dragIndex,
           dropIndex,
@@ -6494,12 +6494,12 @@ var TTRow = class _TTRow extends BaseComponent {
   onTabKey(event) {
     const rows = this.el.nativeElement ? [...Y(this.el.nativeElement.parentNode, "tr")] : void 0;
     if (rows && s(rows)) {
-      const hasSelectedRow = rows.some((row) => Q2(row, "data-p-highlight") || row.getAttribute("aria-selected") === "true");
+      const hasSelectedRow = rows.some((row) => Q(row, "data-p-highlight") || row.getAttribute("aria-selected") === "true");
       rows.forEach((row) => {
         row.tabIndex = -1;
       });
       if (hasSelectedRow) {
-        const selectedNodes = rows.filter((node) => Q2(node, "data-p-highlight") || node.getAttribute("aria-selected") === "true");
+        const selectedNodes = rows.filter((node) => Q(node, "data-p-highlight") || node.getAttribute("aria-selected") === "true");
         selectedNodes[0].tabIndex = 0;
         return;
       }

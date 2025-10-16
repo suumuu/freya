@@ -1,67 +1,62 @@
 import {
   Checkbox
-} from "./chunk-YUZRF3FK.js";
-import {
-  InputIcon
-} from "./chunk-UKJNKVXU.js";
-import {
-  IconField
-} from "./chunk-5N3FMS2U.js";
+} from "./chunk-KXA4KMVL.js";
 import {
   Chip
-} from "./chunk-V77MMLLH.js";
+} from "./chunk-DF3W27UO.js";
+import {
+  InputIcon
+} from "./chunk-ISZFA6BA.js";
+import {
+  IconField
+} from "./chunk-EIGV2FR5.js";
 import {
   Overlay
-} from "./chunk-YU5QVJAK.js";
+} from "./chunk-LFYNQM7R.js";
 import {
   Scroller
-} from "./chunk-KSH3UTKP.js";
+} from "./chunk-7KIH4NC3.js";
 import {
   InputText
-} from "./chunk-4CN5EJJ6.js";
+} from "./chunk-6WKAZXNC.js";
 import {
   BaseEditableHolder
-} from "./chunk-26WE2ILX.js";
-import "./chunk-2EEXA7FW.js";
+} from "./chunk-ST6GTRYQ.js";
+import "./chunk-K72GOPNU.js";
 import {
   Tooltip
-} from "./chunk-UN64SLYI.js";
+} from "./chunk-ZNUMPL5Q.js";
 import {
   Fluid
-} from "./chunk-ONQFUGA2.js";
+} from "./chunk-HMQE2KXM.js";
 import {
   AutoFocus
-} from "./chunk-QQ7HCBDO.js";
+} from "./chunk-AULJRDGR.js";
 import {
   DomHandler,
   unblockBodyScroll
-} from "./chunk-VUXHBR7Y.js";
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  NgControlStatus,
-  NgModel
-} from "./chunk-LBJKRNRD.js";
+} from "./chunk-Q2NLPPHQ.js";
 import {
   ObjectUtils
 } from "./chunk-BB55NINM.js";
 import {
   Ripple
-} from "./chunk-PSFGPXRF.js";
+} from "./chunk-YHN6MAG2.js";
 import {
   ChevronDownIcon,
   SearchIcon,
   TimesIcon
-} from "./chunk-RIG3C35J.js";
+} from "./chunk-E7R6YS2X.js";
 import {
   CheckIcon
-} from "./chunk-ZN64Z63N.js";
+} from "./chunk-XI2SIRGN.js";
 import {
   BaseComponent
-} from "./chunk-3X7R6USB.js";
+} from "./chunk-MNAA6S3O.js";
 import {
   BaseStyle
-} from "./chunk-AY5DPW7U.js";
+} from "./chunk-3XZT2HEB.js";
+import "./chunk-DCRKS4SA.js";
 import {
   FilterService,
   Footer,
@@ -70,9 +65,30 @@ import {
   PrimeTemplate,
   SharedModule,
   TranslationKeys
-} from "./chunk-VY6QECRP.js";
+} from "./chunk-4YGAGIGH.js";
+import {
+  Lt,
+  M,
+  b,
+  b2,
+  bt,
+  c,
+  j2 as j,
+  k2 as k,
+  s2 as s,
+  s3 as s2,
+  vt,
+  y,
+  z
+} from "./chunk-EXUXITB2.js";
 import "./chunk-RDLP67JE.js";
 import "./chunk-P5OQKAHD.js";
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControlStatus,
+  NgModel
+} from "./chunk-LBJKRNRD.js";
 import {
   CommonModule,
   NgClass,
@@ -155,22 +171,6 @@ import {
 import "./chunk-HWYXSU2G.js";
 import "./chunk-JRFR6BLO.js";
 import "./chunk-MARUHEWW.js";
-import "./chunk-UKZYY4TH.js";
-import {
-  Lt,
-  M,
-  b,
-  b2,
-  bt,
-  c,
-  j,
-  k,
-  s,
-  s3 as s2,
-  vt,
-  y,
-  z2 as z
-} from "./chunk-RK2QIU6W.js";
 import {
   __spreadProps,
   __spreadValues
@@ -2077,7 +2077,7 @@ var MultiSelect = class _MultiSelect extends BaseEditableHolder {
   }
   visibleOptions = computed(() => {
     const options = this.getAllVisibleAndNonVisibleOptions();
-    const isArrayOfObjects = b(options) && ObjectUtils.isObject(options[0]);
+    const isArrayOfObjects = b2(options) && ObjectUtils.isObject(options[0]);
     if (this._filterValue()) {
       let filteredOptions;
       if (isArrayOfObjects) {
@@ -2848,7 +2848,7 @@ var MultiSelect = class _MultiSelect extends BaseEditableHolder {
     return matched;
   }
   hasFocusableElements() {
-    return b2(this.overlayViewChild?.overlayViewChild?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
+    return b(this.overlayViewChild?.overlayViewChild?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
   }
   hasFilter() {
     return this._filterValue() && this._filterValue().trim().length > 0;

@@ -1,13 +1,15 @@
 import {
   BaseComponent
-} from "./chunk-3X7R6USB.js";
+} from "./chunk-MNAA6S3O.js";
 import {
   BaseStyle
-} from "./chunk-AY5DPW7U.js";
+} from "./chunk-3XZT2HEB.js";
+import "./chunk-DCRKS4SA.js";
 import {
   PrimeTemplate,
   SharedModule
-} from "./chunk-VY6QECRP.js";
+} from "./chunk-4YGAGIGH.js";
+import "./chunk-EXUXITB2.js";
 import {
   CommonModule,
   NgTemplateOutlet,
@@ -47,8 +49,6 @@ import {
 import "./chunk-HWYXSU2G.js";
 import "./chunk-JRFR6BLO.js";
 import "./chunk-MARUHEWW.js";
-import "./chunk-UKZYY4TH.js";
-import "./chunk-RK2QIU6W.js";
 import "./chunk-4MWRP73S.js";
 
 // node_modules/@primeuix/styles/dist/imagecompare/index.mjs

@@ -21,6 +21,7 @@ import {ChipModule} from 'primeng/chip';
 import {CheckboxModule} from 'primeng/checkbox';
 import {Customer, CustomerService, Representative} from '@/pages/service/customer.service';
 import {Product, ProductService} from '@/pages/service/product.service';
+import { Paginator, PaginatorModule } from "primeng/paginator";
 
 interface expandedRows {
     [key: string]: boolean;
@@ -28,26 +29,27 @@ interface expandedRows {
 @Component({
     selector: 'app-table-demo',
     imports: [
-        TableModule,
-        MultiSelectModule,
-        SelectModule,
-        InputIconModule,
-        TagModule,
-        ChipModule,
-        CheckboxModule,
-        InputTextModule,
-        SliderModule,
-        ProgressBarModule,
-        ToggleButtonModule,
-        ToastModule,
-        TooltipModule,
-        CommonModule,
-        FormsModule,
-        ButtonModule,
-        RatingModule,
-        RippleModule,
-        IconFieldModule
-    ],
+    TableModule,
+    MultiSelectModule,
+    SelectModule,
+    InputIconModule,
+    TagModule,
+    ChipModule,
+    CheckboxModule,
+    InputTextModule,
+    SliderModule,
+    ProgressBarModule,
+    ToggleButtonModule,
+    ToastModule,
+    TooltipModule,
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    RatingModule,
+    RippleModule,
+    IconFieldModule,
+    PaginatorModule
+],
     styles: [`
         * {
             font-family: 'Inter', sans-serif !important;
@@ -176,6 +178,29 @@ interface expandedRows {
             z-index: 9999 !important;
         }
 
+        /* Custom Pagination Styles */
+        ::ng-deep .custom-pagination .p-select {
+            min-height: 32px !important;
+        }
+
+        ::ng-deep .custom-pagination .p-select .p-select-label {
+            padding: 4px 8px !important;
+            font-size: 14px !important;
+        }
+
+        ::ng-deep .custom-pagination .p-button {
+            width: 32px !important;
+            height: 32px !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        ::ng-deep .custom-pagination .p-button:disabled {
+            opacity: 0.4 !important;
+        }
+
         /* Activity status circles */
         .activity-circle {
             width: 10px !important;
@@ -233,6 +258,8 @@ interface expandedRows {
             color: #581c87 !important; /* purple-800 */
             border: none !important;
         }
+
+        
     `],
     template: ` 
 
@@ -242,7 +269,7 @@ interface expandedRows {
             <div class="font-semibold text-xl mb-4">Frozen Columns</div>
             <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'ON'" offLabel='OFF' />
 
-            <p-table [value]="customers2" [scrollable]="true" scrollHeight="400px" styleClass="mt-4">
+            <p-table [value]="paginatedCustomers" [scrollable]="true" scrollHeight="400px" [paginator]="false" class="mt-4">
                 <ng-template #header>
                     <tr>
                         <th style="min-width:80px" pFrozenColumn class="font-bold" pSortableColumn="name" ngClass="flex">
@@ -414,7 +441,7 @@ interface expandedRows {
                 <ng-template #body let-customer let-rowIndex="rowIndex">
                     <tr>
                         <td pFrozenColumn class="">
-                            {{ rowIndex + 1 }}
+                            {{ first + rowIndex + 1 }}
                         </td>
                         <td style="min-width:100px">{{ customer.id }}</td>
                         <td>{{ customer.country.name }}</td>
@@ -472,7 +499,7 @@ interface expandedRows {
                         </td>
                         <td>{{ customer.representative.name }}</td>
                         <td>
-                            <img [alt]="'Test Image ' + (rowIndex + 1)" [src]="getTestImage(rowIndex)" width="48" height="48" style="vertical-align: middle;" />
+                            <img [alt]="'Test Image ' + (first + rowIndex + 1)" [src]="getTestImage(first + rowIndex)" width="48" height="48" style="vertical-align: middle;" />
                         </td>
                         <td>{{ customer.date | date: 'd MMMM y' }}</td>
                         <td>
@@ -500,6 +527,75 @@ interface expandedRows {
                     </tr>
                 </ng-template>
             </p-table>
+            
+            <!-- Custom Pagination -->
+            <div class="flex justify-between items-center mt-4 px-4 py-3 border-t border-gray-200 custom-pagination">
+                <!-- Left side: Rows per page -->
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-700">Rows per page:</span>
+                    <p-select 
+                        [ngModel]="rows" 
+                        [options]="rowsPerPageOptions" 
+                        (onChange)="onRowsPerPageChange($event.value)"
+                        [style]="{ 'min-width': '60px' }"
+                        styleClass="text-sm">
+                        <ng-template let-option #item>
+                            {{ option }}
+                        </ng-template>
+                    </p-select>
+                    <span class="text-sm text-gray-700 ml-2">
+                        {{ getDisplayRange() }}
+                    </span>
+                </div>
+
+                <!-- Right side: Navigation controls -->
+                <div class="flex items-center">
+                    <!-- First page -->
+                    <button 
+                        pButton 
+                        type="button" 
+                        icon="pi pi-angle-double-left" 
+                        class="p-button-text p-button-sm"
+                        [disabled]="!canGoPrevious()"
+                        (click)="goToFirstPage()">
+                    </button>
+                    
+                    <!-- Previous page -->
+                    <button 
+                        pButton 
+                        type="button" 
+                        icon="pi pi-angle-left" 
+                        class="p-button-text p-button-sm"
+                        [disabled]="!canGoPrevious()"
+                        (click)="goToPreviousPage()">
+                    </button>
+                    
+                    <!-- Page info -->
+                    <span class="text-sm text-gray-700 mx-2">
+                        {{ getCurrentPage() }}
+                    </span>
+                    
+                    <!-- Next page -->
+                    <button 
+                        pButton 
+                        type="button" 
+                        icon="pi pi-angle-right" 
+                        class="p-button-text p-button-sm"
+                        [disabled]="!canGoNext()"
+                        (click)="goToNextPage()">
+                    </button>
+                    
+                    <!-- Last page -->
+                    <button 
+                        pButton 
+                        type="button" 
+                        icon="pi pi-angle-double-right" 
+                        class="p-button-text p-button-sm"
+                        [disabled]="!canGoNext()"
+                        (click)="goToLastPage()">
+                    </button>
+                </div>
+            </div>
         </div>
     
     <div class="card">
@@ -887,6 +983,12 @@ export class TableDemo implements OnInit {
 
     loading: boolean = true;
 
+    // Pagination properties
+    first: number = 0;
+    rows: number = 10;
+    totalRecords: number = 0;
+    rowsPerPageOptions: number[] = [5, 10, 15, 20, 25, 50];
+
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(
@@ -905,6 +1007,7 @@ export class TableDemo implements OnInit {
         });
         this.customerService.getCustomersMedium().then((customers) => {
             this.customers2 = customers;
+            this.totalRecords = customers.length;
             // Add sample types data to each customer
             this.customers2.forEach((customer, index) => {
                 const sampleTypes = [
@@ -1124,5 +1227,68 @@ export class TableDemo implements OnInit {
         ];
         
         return testImages[index % testImages.length];
+    }
+
+    // Pagination methods
+    onPageChange(event: any) {
+        this.first = event.first;
+        this.rows = event.rows;
+    }
+
+    onRowsPerPageChange(rows: number) {
+        this.rows = rows;
+        this.first = 0; // Reset to first page when changing rows per page
+    }
+
+    getCurrentPage(): number {
+        return Math.floor(this.first / this.rows) + 1;
+    }
+
+    getTotalPages(): number {
+        return Math.ceil(this.totalRecords / this.rows);
+    }
+
+    goToFirstPage() {
+        this.first = 0;
+    }
+
+    goToPreviousPage() {
+        if (this.first > 0) {
+            this.first -= this.rows;
+        }
+    }
+
+    goToNextPage() {
+        if (this.first + this.rows < this.totalRecords) {
+            this.first += this.rows;
+        }
+    }
+
+    goToLastPage() {
+        this.first = Math.floor(this.totalRecords / this.rows) * this.rows;
+        if (this.first >= this.totalRecords) {
+            this.first = Math.max(0, this.totalRecords - this.rows);
+        }
+    }
+
+    canGoPrevious(): boolean {
+        return this.first > 0;
+    }
+
+    canGoNext(): boolean {
+        return this.first + this.rows < this.totalRecords;
+    }
+
+    getDisplayRange(): string {
+        const start = this.first + 1;
+        const end = Math.min(this.first + this.rows, this.totalRecords);
+        return `${start}-${end} of ${this.totalRecords}`;
+    }
+
+    get paginatedCustomers(): Customer[] {
+        if (!this.customers2) return [];
+        const start = this.first;
+        const end = start + this.rows;
+        return this.customers2.slice(start, end);
     }
 }
