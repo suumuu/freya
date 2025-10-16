@@ -49,34 +49,108 @@ interface expandedRows {
         IconFieldModule
     ],
     styles: [`
+        * {
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        /* Preserve icon fonts for sorting and UI icons */
+        .pi, [class*="pi-"], .ri, [class*="ri-"] {
+            font-family: 'primeicons', 'remixicon' !important;
+        }
+
+        /* Ensure sorting icons are visible and properly styled */
+        .pi.pi-angle-up, .pi.pi-angle-down {
+            font-family: 'primeicons' !important;
+            font-size: 12px !important;
+            display: inline-block !important;
+        }
+
+        .ri-expand-up-down-line {
+            font-family: 'remixicon' !important;
+            font-size: 14px !important;
+            display: inline-block !important;
+            width: 14px !important;
+            height: 14px !important;
+        }
+
+        /* Column header styling for single line and auto width */
+        ::ng-deep .p-datatable thead th {
+            white-space: nowrap !important;
+            width: auto !important;
+            min-width: auto !important;
+            padding: 12px 16px !important;
+            height: 44px !important;
+            max-height: 44px !important;
+            box-sizing: border-box !important;
+            vertical-align: middle !important;
+        }
+
+        ::ng-deep .p-datatable thead tr {
+            height: 44px !important;
+        }
+
+        ::ng-deep .p-datatable thead th > div {
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: initial !important;
+        }
+
+        /* Ensure header content stays in one line */
+        ::ng-deep .p-datatable thead th .flex {
+            flex-wrap: nowrap !important;
+        }
+
+        /* Type column data - keep chips in single line */
+        ::ng-deep .p-datatable tbody td {
+            white-space: nowrap !important;
+        }
+
+        ::ng-deep .p-datatable tbody td .flex {
+            flex-wrap: nowrap !important;
+            overflow: hidden !important;
+        }
+
+        /* Specific styling for chip container in TYPE column */
+        .chip-container {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+            align-items: center !important;
+            overflow: hidden !important;
+            max-width: 100% !important;
+        }
+
         ::ng-deep .p-column-filter-menu .p-column-filter-buttonbar {
             display: none !important;
         }
 
-        ::ng-deep .chip-success .p-chip {
+        /* Vertically center the filter icon */
+        ::ng-deep .p-column-filter {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        ::ng-deep .p-column-filter .p-button {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        ::ng-deep .p-chip {
             background: #dcfce7;
-            color: #166534;
-        }
-
-        ::ng-deep .chip-info .p-chip {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        ::ng-deep .chip-warn .p-chip {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        ::ng-deep .chip-secondary .p-chip {
-            background: #f1f5f9;
-            color: #475569;
+            color: #111928;
+            font-weight: 500;
+            border-radius: 6px !important;
+            padding: 2px 10px !important;
         }
 
         ::ng-deep .chip-count .p-chip {
             background: #e2e8f0;
-            color: #475569;
-            font-weight: 600;
+            color: #111928;
+            font-weight: 500;
         }
 
         ::ng-deep .chip-count:hover .p-chip {
@@ -101,6 +175,32 @@ interface expandedRows {
         ::ng-deep .p-tooltip {
             z-index: 9999 !important;
         }
+
+        /* Activity status circles */
+        .activity-circle {
+            width: 10px !important;
+            height: 10px !important;
+            border-radius: 12px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .active-circle {
+            background-color: #0E9F6E !important; /* Green color for Active */
+        }
+
+        .inactive-circle {
+            background-color: #F05252 !important; /* Red color for Inactive */
+        }
+
+        /* Action button icon colors */
+        ::ng-deep .action-pencil .pi {
+            color: #6875F5 !important; /* Pencil color */
+        }
+
+        ::ng-deep .action-trash .pi {
+            color: #F05252 !important; /* Trash color */
+        }
     `],
     template: ` 
 
@@ -114,33 +214,32 @@ interface expandedRows {
                 <ng-template #header>
                     <tr>
                         <th style="min-width:80px" pFrozenColumn class="font-bold" pSortableColumn="name" ngClass="flex">
-                        
+                             <div class="flex items-center">
                                 SL
-                            <div class="flex flex-col ml-2">
-                                <i class="ri-expand-up-down-line font-xl text-gray-500"></i>
+                            <div class="flex flex-col" style="margin-left: 6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
+                            </div>
                             </div>
                         </th>
                         <th style="min-width:150px" pSortableColumn="id">
                             <div class="flex items-center">
                                 REASON CODE
-                                <div class="flex flex-col ml-2">
-                                    <i class="ri-expand-up-down-line"></i>
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
                             </div>
                         </th>
                         <th style="min-width:250px" pSortableColumn="country.name">
                             <div class="flex items-center">
                                 DESCRIPTION IN ENGLISH
-                                <div class="flex flex-col ml-2">
-                                    <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
                             </div>
                         </th>
                           <th style="min-width: 14rem">
-                            <div class="flex justify-between items-center">
-                                CMR
-                                <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            <div class="flex items-center"> 
+                                <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="p-0">
                                     <ng-template #header>
                                         <div class="px-4 pt-4 pb-0">
                                             <span class="font-bold">Agent Picker</span>
@@ -157,65 +256,66 @@ interface expandedRows {
                                         </p-multi-select>
                                     </ng-template>
                                 </p-columnFilter>
+                                CMR
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
+                                </div>
                             </div>
                         </th>
                         <th style="min-width:250px" pSortableColumn="date">
                             <div class="flex items-center">
                                 DESCRIPTION IN BANGLA
-                                <div class="flex flex-col ml-2">
-                                    <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
                             </div>
                         </th>
                         <th style="min-width:260px" pSortableColumn="company">
-                            <div class="flex items-center">
-                                <p-columnFilter field="company" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" [showClearButton]="false" [showApplyButton]="false">
-                                        <ng-template #header>
-                                            <div class="p-3">
-                                                <div class="flex justify-between items-center mb-3">
-                                                    <span class="font-medium text-sm">Select Item(s)</span>
-                                                    <label class="flex items-center cursor-pointer">
-                                                        <p-checkbox [(ngModel)]="selectAllTypes" (onChange)="onSelectAllTypes()" styleClass="mr-2 text-indigo-600"></p-checkbox>
-                                                        <span class="text-indigo-600 text-sm font-medium">Select All</span>
-                                                    </label>
-                                                </div>
-                                                <div class="relative">
-                                                    <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                                    <input type="text" placeholder="Search here" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md text-sm">
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                        <ng-template #filter let-value let-filter="filterCallback">
-                                            <div class="p-3 pt-0">
-                                                <div class="space-y-2">
-                                                    <div *ngFor="let type of types" class="flex items-center">
-                                                        <p-checkbox [inputId]="type.value" [value]="type.value" [(ngModel)]="selectedTypes" (onChange)="onTypeSelectionChange(type.value, $event)" styleClass="mr-3 text-indigo-600"></p-checkbox>
-                                                        <label [for]="type.value" class="text-sm cursor-pointer">{{ type.label }}</label>
+                            <div class="flex items-center" style="gap: 0;">
+                                <div class="flex items-center" style="gap: 0;">
+                                    <p-columnFilter field="company" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" [showClearButton]="false" [showApplyButton]="false">
+                                            <ng-template #header>
+                                                <div class="p-3">
+                                                    <div class="flex justify-between items-center mb-3">
+                                                        <span class="font-medium text-sm">Select Item(s)</span>
+                                                        <label class="flex items-center cursor-pointer">
+                                                            <p-checkbox [(ngModel)]="selectAllTypes" (onChange)="onSelectAllTypes()" styleClass="mr-2 text-indigo-600"></p-checkbox>
+                                                            <span class="text-indigo-600 text-sm font-medium">Select All</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="relative">
+                                                        <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                                        <input type="text" placeholder="Search here" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md text-sm">
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
-                                        <ng-template #footer let-filter="filterCallback">
-                                            <div class="p-1">
-                                                <div class="flex justify-start border-t border-gray-200">
-                                                    <p-button label="Apply Filter" size="small" (onClick)="filter(selectedTypes)" styleClass="p-button-sm w-full" />
+                                            </ng-template>
+                                            <ng-template #filter let-value let-filter="filterCallback">
+                                                <div class="p-3 pt-0">
+                                                    <div class="space-y-2">
+                                                        <div *ngFor="let type of types" class="flex items-center">
+                                                            <p-checkbox [inputId]="type.value" [value]="type.value" [(ngModel)]="selectedTypes" (onChange)="onTypeSelectionChange(type.value, $event)" styleClass="mr-3 text-indigo-600"></p-checkbox>
+                                                            <label [for]="type.value" class="text-sm cursor-pointer">{{ type.label }}</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
-                                    </p-columnFilter>
-                                TYPE
-                                <div class="flex items-center ml-2">
-                                    <div class="flex flex-col">
-                                        <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                        <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    </div>
+                                            </ng-template>
+                                            <ng-template #footer let-filter="filterCallback">
+                                                <div class="p-1">
+                                                    <div class="flex justify-start border-t border-gray-200">
+                                                        <p-button label="Apply Filter" size="small" (onClick)="filter(selectedTypes)" styleClass="p-button-sm w-full" />
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-columnFilter>
+                                    TYPE
+                                </div>
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
                             </div>
                         </th>
                         <th style="min-width:150px" pSortableColumn="status">
                             <div class="flex justify-between items-center">
-                                Status
                                 <p-columnFilter field="status" matchMode="equals" display="menu">
                                     <ng-template #filter let-value let-filter="filterCallback">
                                         <p-select [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [style]="{ 'min-width': '12rem' }">
@@ -225,29 +325,56 @@ interface expandedRows {
                                         </p-select>
                                     </ng-template>
                                 </p-columnFilter>
+                                STATUS
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
+                                </div>
                             </div>
                         </th>
                         <th style="min-width:200px" pSortableColumn="activity">
                             <div class="flex items-center">
-                                Activity
-                                <div class="flex flex-col ml-2">
-                                    <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
+                                ACTIVITY
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
                             </div>
                         </th>
                         <th style="min-width:200px" pSortableColumn="representative.name">
                             <div class="flex items-center">
-                                Representative
-                                <div class="flex flex-col ml-2">
-                                    <i class="pi pi-angle-up cursor-pointer w-3 h-3 text-gray-500"></i>
-                                    <i class="pi pi-angle-down cursor-pointer w-3 h-3 text-gray-500"></i>
+                                REPRESENTATIVE
+                                <div class="flex flex-col" style="margin-left: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
+                            </div>
+                        </th>
+                        <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
+                               IMAGE
+                            </div>
+                        </th>
+                        <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
+                               DATE
+                            </div>
+                        </th>
+                         <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
+                              TIME TAKEN
+                            </div>
+                        </th>
+                         <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
+                                ASSIGN UNIT TO
+                            </div>
+                        </th>
+                        <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
+                                ACTION
                             </div>
                         </th>
                         <th style="min-width:85px" alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen" [ngClass]="{ 'font-bold': balanceFrozen }">
                             <div class="flex justify-between items-center">
-                                Action
+                                ACTION
                             </div>
                         </th>
                     </tr>
@@ -275,13 +402,12 @@ interface expandedRows {
                             </span>
                         </td>
                         <td>
-                            <div class="flex flex-wrap gap-1 items-center" style="max-width: 15rem;">
+                            <div class="chip-container">
                                 <ng-container *ngIf="customer.types && customer.types.length > 0; else noTypes">
                                     <ng-container *ngFor="let type of getVisibleChips(customer.types, 1).visible">
                                         <p-chip 
                                             [label]="type" 
-                                            styleClass="text-xs"
-                                            [ngClass]="'chip-' + getChipSeverity(type)">
+                                            styleClass="text-xs">
                                         </p-chip>
                                     </ng-container>
                                     <p-chip 
@@ -300,8 +426,40 @@ interface expandedRows {
                         <td>
                             <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status)" />
                         </td>
-                        <td>{{ customer.activity }}</td>
+                        <td>
+                            <div class="flex items-center gap-2">
+                                <div 
+                                    class="activity-circle"
+                                    [ngClass]="{
+                                        'active-circle': customer.activityStatus === 'Active',
+                                        'inactive-circle': customer.activityStatus === 'Inactive'
+                                    }">
+                                </div>
+                                <span>{{ customer.activityStatus || 'Unknown' }}</span>
+                            </div>
+                        </td>
                         <td>{{ customer.representative.name }}</td>
+                        <td>
+                            <img [alt]="'Test Image ' + (rowIndex + 1)" [src]="getTestImage(rowIndex)" width="48" height="48" style="vertical-align: middle;" />
+                        </td>
+                        <td>{{ customer.date | date: 'd MMMM y' }}</td>
+                        <td>
+                            <span 
+                                [ngClass]="{
+                                    'text-red-500': customer.timeTaken > 20,
+                                    'text-green-500': customer.timeTaken <= 20
+                                }"
+                                class="font-normal">
+                                {{ customer.timeTaken > 20 ? customer.timeTaken  : customer.timeTaken  }}
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" pInputText placeholder="" style="width: 180px;" />
+                        </td>
+                        <td>
+                            <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-plain action-pencil"></button>
+                            <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-plain action-trash"></button>
+                        </td>
                         <td alignFrozen="right" pFrozenColumn [frozen]="balanceFrozen" [ngClass]="{ 'font-bold': balanceFrozen }">
                             <span class="flex justify-center items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 24 24" fill="rgba(6,148,162,1)"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
@@ -438,7 +596,7 @@ interface expandedRows {
                             </div>
                         </td>
                         <td>
-                            {{ customer.date | date: 'MM/dd/yyyy' }}
+                            {{ customer.date | date: 'd MMMM y' }}
                         </td>
                         <td>
                             {{ customer.balance | currency: 'USD' : 'symbol' }}
@@ -500,7 +658,7 @@ interface expandedRows {
                         </td>
                         <td style="min-width:100px">{{ customer.id }}</td>
                         <td>{{ customer.country.name }}</td>
-                        <td>{{ customer.date }}</td>
+                        <td>{{ customer.date | date: 'd MMMM y' }}</td>
                         <td>{{ customer.company }}</td>
                         <td>{{ customer.status }}</td>
                         <td>{{ customer.activity }}</td>
@@ -654,7 +812,7 @@ interface expandedRows {
                             <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)" />
                         </td>
                         <td>
-                            {{ customer.date }}
+                            {{ customer.date | date: 'd MMMM y' }}
                         </td>
                     </tr>
                 </ng-template>
@@ -730,6 +888,12 @@ export class TableDemo implements OnInit {
                 // Assign 3-6 random types to each customer
                 const numTypes = Math.floor(Math.random() * 4) + 3;
                 customer.types = sampleTypes.slice(0, numTypes);
+                
+                // Add activity status - randomly assign Active or Inactive
+                customer.activityStatus = Math.random() > 0.5 ? 'Active' : 'Inactive';
+                
+                // Add random time taken (5 to 35 minutes)
+                customer.timeTaken = Math.floor(Math.random() * 31) + 5;
             });
         });
         this.customerService.getCustomersLarge().then((customers) => (this.customers3 = customers));
@@ -913,19 +1077,16 @@ export class TableDemo implements OnInit {
         return { visible, remaining, tooltip };
     }
 
-    getChipSeverity(type: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' {
-        // You can customize severity based on type
-        const severityMap: { [key: string]: any } = {
-            'Customer survey': 'success',
-            'POSM distribution': 'info',
-            'Consumer Survey': 'warn',
-            'Pending': 'secondary',
-            'Geo Fencing': 'success',
-            'Audit': 'info',
-            'Information': 'warn',
-            'Communication': 'success'
-        };
+    getTestImage(index: number): string {
+        const testImages = [
+            '/demo/images/avatar/square/avatar-f-1.jpg',
+            '/demo/images/avatar/square/avatar-f-2.jpg',
+            '/demo/images/avatar/square/avatar-m-1.jpg',
+            '/demo/images/avatar/square/avatar-f-1@2x.jpg',
+            '/demo/images/avatar/square/avatar-f-2@2x.jpg',
+            '/demo/images/avatar/square/avatar-m-1@2x.jpg'
+        ];
         
-        return severityMap[type] || 'success';
+        return testImages[index % testImages.length];
     }
 }

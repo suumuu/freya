@@ -19,10 +19,12 @@ export interface Customer {
     date?: string;
     status?: string;
     activity?: number;
+    activityStatus?: string;
     representative?: Representative;
     types?: string[];
     balance?: number;
     verified?: boolean;
+    timeTaken?: number;
 }
 
 @Injectable()
