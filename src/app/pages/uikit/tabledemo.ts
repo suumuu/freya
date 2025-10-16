@@ -201,6 +201,38 @@ interface expandedRows {
         ::ng-deep .action-trash .pi {
             color: #F05252 !important; /* Trash color */
         }
+
+        /* Custom Status Tag Colors */
+        ::ng-deep .p-tag.p-tag-success {
+            background-color: #dcfce7 !important; /* green-100 */
+            color: #166534 !important; /* green-800 */
+            border: none !important;
+        }
+
+        ::ng-deep .p-tag.p-tag-danger {
+            background-color: #fee2e2 !important; /* red-100 */
+            color: #991b1b !important; /* red-800 */
+            border: none !important;
+        }
+
+        ::ng-deep .p-tag.p-tag-warn {
+            background-color: #fef3c7 !important; /* yellow-100 */
+            color: #92400e !important; /* yellow-800 */
+            border: none !important;
+        }
+
+        ::ng-deep .p-tag.p-tag-info {
+            background-color: #e5e7eb !important; /* gray-100 */
+            color: #1f2937 !important; /* gray-800 */
+            border: none !important;
+        }
+
+        /* Purple status using secondary */
+        ::ng-deep .p-tag.p-tag-secondary {
+            background-color: #f3e8ff !important; /* purple-100 */
+            color: #581c87 !important; /* purple-800 */
+            border: none !important;
+        }
     `],
     template: ` 
 
@@ -1003,6 +1035,10 @@ export class TableDemo implements OnInit {
             case 'CANCELLED':
             case 'cancelled':
                 return 'danger';
+
+            case 'renewal':
+            case 'proposal':
+                return 'secondary';
 
             default:
                 return 'info';
