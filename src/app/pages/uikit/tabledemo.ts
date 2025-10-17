@@ -195,10 +195,27 @@ interface expandedRows {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
+            border: 1.5px solid #e0e7ff !important; /* indigo-100 */
+                border-radius: 6px !important;
+                background: #fff !important;
         }
 
         ::ng-deep .custom-pagination .p-button:disabled {
             opacity: 0.4 !important;
+        }
+
+        ::ng-deep .custom-pagination .page-info-btn {
+            border: 1.5px solid #e0e7ff !important; /* indigo-100 */
+            border-radius: 6px !important;
+            background: #fff !important;
+            min-width: 32px !important;
+            height: 32px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            color: #5850EC !important;
         }
 
         /* Activity status circles */
@@ -282,7 +299,7 @@ interface expandedRows {
                         </th>
                         <th style="min-width:150px" pSortableColumn="id">
                             <div class="flex items-center">
-                                REASON CODE
+                                ID
                                 <div class="flex flex-col" style="margin-left: 6px;">
                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)"><path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path></svg>
                                 </div>
@@ -413,6 +430,11 @@ interface expandedRows {
                         </th>
                         <th style="min-width:85px">
                             <div class="flex justify-between items-center">
+                               MEDIA TYPE
+                            </div>
+                        </th>
+                        <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
                                DATE
                             </div>
                         </th>
@@ -424,6 +446,11 @@ interface expandedRows {
                          <th style="min-width:85px">
                             <div class="flex justify-between items-center">
                                 ASSIGN UNIT TO
+                            </div>
+                        </th>
+                         <th style="min-width:85px">
+                            <div class="flex justify-between items-center">
+                                    DROPDOWN
                             </div>
                         </th>
                         <th style="min-width:85px">
@@ -501,7 +528,13 @@ interface expandedRows {
                         <td>
                             <img [alt]="'Test Image ' + (first + rowIndex + 1)" [src]="getTestImage(first + rowIndex)" width="48" height="48" style="vertical-align: middle;" />
                         </td>
-                        <td>{{ customer.date | date: 'd MMMM y' }}</td>
+                        <td>
+                            <div class="flex gap-2 items-center">
+                                <button pButton type="button" label="Image" class="p-button-sm p-button-outlined pi pi-image" style="padding:8px 8px;font-size:12px;"></button>
+                                <button pButton type="button" label="Video" class="p-button-sm p-button-outlined pi pi-video" style="padding:8px 8px;font-size:12px;"></button>
+                            </div>
+                        </td>
+                       <td>{{ customer.date | date: 'd MMMM y' }}</td>
                         <td>
                             <span 
                                 [ngClass]="{
@@ -514,6 +547,22 @@ interface expandedRows {
                         </td>
                         <td>
                             <input type="text" pInputText placeholder="" style="width: 180px;" />
+                        </td>
+                        <td>
+                            <div style="position:relative;display:inline-block;width:150px;">
+                                <select [(ngModel)]="customer.dropdownValue" 
+                                    style="width:100%;padding:8px 32px 8px 12px;border-radius:6px;border:1px solid #d1d5db;font-size:15px;background:#fff;color:#374151;appearance:none;transition:border-color 0.2s,box-shadow 0.2s;outline:none;"
+                                    onfocus="this.style.borderColor='#6366f1';"
+                                    onblur="this.style.borderColor='#d1d5db';this.style.boxShadow='';"
+                                    onmouseover="this.style.borderColor='#6366f1';"
+                                    onmouseout="this.style.borderColor=this === document.activeElement ? '#6366f1' : '#d1d5db';"
+                                >
+                                    <option *ngFor="let option of dropdownOptions" [ngValue]="option.value" [ngStyle]="{'background': '#e0f2fe', 'color': '#2563eb'}">{{ option.label }}</option>
+                                </select>
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                            </div>
                         </td>
                         <td>
                             <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-plain action-pencil"></button>
@@ -531,7 +580,7 @@ interface expandedRows {
             <!-- Custom Pagination -->
             <div class="flex justify-between items-center mt-4 px-4 py-3 border-t border-gray-200 custom-pagination">
                 <!-- Left side: Rows per page -->
-                <div class="flex items-center gap-2">
+                <div class="flex items-center">
                     <span class="text-sm text-gray-700">Rows per page:</span>
                     <p-select 
                         [ngModel]="rows" 
@@ -555,7 +604,7 @@ interface expandedRows {
                         pButton 
                         type="button" 
                         icon="pi pi-angle-double-left" 
-                        class="p-button-text p-button-sm"
+                        class="p-button-text p-button-sm "
                         [disabled]="!canGoPrevious()"
                         (click)="goToFirstPage()">
                     </button>
@@ -565,13 +614,13 @@ interface expandedRows {
                         pButton 
                         type="button" 
                         icon="pi pi-angle-left" 
-                        class="p-button-text p-button-sm"
+                        class="p-button-text p-button-sm "
                         [disabled]="!canGoPrevious()"
                         (click)="goToPreviousPage()">
                     </button>
                     
                     <!-- Page info -->
-                    <span class="text-sm text-gray-700 mx-2">
+                    <span class="page-info-btn">
                         {{ getCurrentPage() }}
                     </span>
                     
@@ -580,7 +629,7 @@ interface expandedRows {
                         pButton 
                         type="button" 
                         icon="pi pi-angle-right" 
-                        class="p-button-text p-button-sm"
+                        class="p-button-text p-button-sm "
                         [disabled]="!canGoNext()"
                         (click)="goToNextPage()">
                     </button>
@@ -988,6 +1037,13 @@ export class TableDemo implements OnInit {
     rows: number = 10;
     totalRecords: number = 0;
     rowsPerPageOptions: number[] = [5, 10, 15, 20, 25, 50];
+
+    // Dropdown options used by the p-select in the table rows
+    dropdownOptions: { label: string; value: any }[] = [
+        { label: 'Action A', value: 'action_a' },
+        { label: 'Action B', value: 'action_b' },
+        { label: 'Action C', value: 'action_c' }
+    ];
 
     @ViewChild('filter') filter!: ElementRef;
 
