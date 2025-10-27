@@ -589,12 +589,12 @@ interface expandedRows {
             <div class="flex justify-between items-center mt-4 px-4 py-3 border-t border-gray-200 custom-pagination">
                 <!-- Left side: Rows per page -->
                 <div class="flex items-center">
-                    <span class="text-sm text-gray-700">Rows per page:</span>
+                    <span class="text-sm text-gray-500 mr-2">Rows per page </span>
                     <p-select 
                         [ngModel]="rows" 
                         [options]="rowsPerPageOptions" 
                         (onChange)="onRowsPerPageChange($event.value)"
-                        [style]="{ 'min-width': '60px' }"
+                        [style]="{ 'min-width': '60px', 'background-color': '#F9FAFB' }"
                         styleClass="text-sm">
                         <ng-template let-option #item>
                             {{ option }}
