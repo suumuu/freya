@@ -196,8 +196,16 @@ interface expandedRows {
             align-items: center !important;
             justify-content: center !important;
             border: 1.5px solid #e0e7ff !important; /* indigo-100 */
-                border-radius: 6px !important;
+                // border-radius: 6px 0px !important;
                 background: #fff !important;
+        }
+
+        ::ng-deep .custom-pagination .p-button-left {
+            border-radius: 6px 0px 0px 6px !important;
+        }
+
+        ::ng-deep .custom-pagination .p-button-right {
+            border-radius: 0px 6px 6px 0px !important;
         }
 
         ::ng-deep .custom-pagination .p-button:disabled {
@@ -206,8 +214,8 @@ interface expandedRows {
 
         ::ng-deep .custom-pagination .page-info-btn {
             border: 1.5px solid #e0e7ff !important; /* indigo-100 */
-            border-radius: 6px !important;
-            background: #fff !important;
+            border-radius: 0px !important;
+            background: #E5EDFF !important; /* indigo-100 */
             min-width: 32px !important;
             height: 32px !important;
             display: flex !important;
@@ -215,7 +223,7 @@ interface expandedRows {
             justify-content: center !important;
             font-size: 15px !important;
             font-weight: 500 !important;
-            color: #5850EC !important;
+            color: #5850EC !important; /* indigo-600 */
         }
 
         /* Activity status circles */
@@ -283,7 +291,7 @@ interface expandedRows {
     <!-- Custom Table -->
 
       <div class="card">
-            <div class="font-semibold text-xl mb-4">Frozen Columns</div>
+            <div class="font-semibold text-xl mb-4">Custom Table for JTI</div>
             <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'ON'" offLabel='OFF' />
 
             <p-table [value]="paginatedCustomers" [scrollable]="true" scrollHeight="400px" [paginator]="false" class="mt-4">
@@ -599,22 +607,12 @@ interface expandedRows {
 
                 <!-- Right side: Navigation controls -->
                 <div class="flex items-center">
-                    <!-- First page -->
-                    <button 
-                        pButton 
-                        type="button" 
-                        icon="pi pi-angle-double-left" 
-                        class="p-button-text p-button-sm "
-                        [disabled]="!canGoPrevious()"
-                        (click)="goToFirstPage()">
-                    </button>
-                    
                     <!-- Previous page -->
                     <button 
                         pButton 
                         type="button" 
-                        icon="pi pi-angle-left" 
-                        class="p-button-text p-button-sm "
+                        icon="pi pi-angle-left text-gray-500" 
+                        class="p-button-text p-button-sm p-button-left "
                         [disabled]="!canGoPrevious()"
                         (click)="goToPreviousPage()">
                     </button>
@@ -628,20 +626,10 @@ interface expandedRows {
                     <button 
                         pButton 
                         type="button" 
-                        icon="pi pi-angle-right" 
-                        class="p-button-text p-button-sm "
+                        icon="pi pi-angle-right text-gray-500" 
+                        class="p-button-text p-button-sm p-button-right"
                         [disabled]="!canGoNext()"
                         (click)="goToNextPage()">
-                    </button>
-                    
-                    <!-- Last page -->
-                    <button 
-                        pButton 
-                        type="button" 
-                        icon="pi pi-angle-double-right" 
-                        class="p-button-text p-button-sm"
-                        [disabled]="!canGoNext()"
-                        (click)="goToLastPage()">
                     </button>
                 </div>
             </div>
