@@ -1,0 +1,268 @@
+<!-- Custom Table -->
+
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Custom Table for JTI</div>
+    <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'ON'" offLabel='OFF' />
+
+    <p-table [value]="paginatedData" [scrollable]="scrollable" [scrollHeight]="scrollHeight" [paginator]="paginator" [rows]="rows" class="mt-4">
+        <ng-template #header>
+            <tr>
+                <th *ngFor="let col of columns"
+                    [style.min-width]="col.width"
+                    [attr.pFrozenColumn]="col.frozen ? '' : null"
+                    [attr.alignFrozen]="col.alignFrozen || null"
+                    [attr.pSortableColumn]="col.sortable ? col.field : null"
+                    [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''">
+                    <div class="flex items-center" [style.gap]="col.type === 'chip' ? '0' : ''">
+                        <!-- Column filters for specific types -->
+                        <div *ngIf="col.filterable && col.type === 'representative'" class="flex items-center">
+                            <p-columnFilter [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="p-0">
+                                <ng-template #header>
+                                    <div class="px-4 pt-4 pb-0">
+                                        <span class="font-bold">Agent Picker</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template #filter let-value let-filter="filterCallback">
+                                    <p-multi-select [ngModel]="value" [options]="col.filterOptions" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" styleClass="w-full">
+                                        <ng-template let-option #item>
+                                            <div class="flex items-center gap-2 w-44">
+                                                <img [alt]="option.label" src="/demo/images/avatar/{{ option.image }}" width="32" />
+                                                <span>{{ option.name }}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multi-select>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                        <div *ngIf="col.filterable && col.type === 'chip'" class="flex items-center" style="gap: 0;">
+                            <p-columnFilter [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" [showClearButton]="false" [showApplyButton]="false">
+                                <ng-template #header>
+                                    <div class="p-3">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <span class="font-medium text-sm">Select Item(s)</span>
+                                            <label class="flex items-center cursor-pointer">
+                                                <p-checkbox [(ngModel)]="selectAllTypes" (onChange)="onSelectAllTypes()" styleClass="mr-2 text-indigo-600"></p-checkbox>
+                                                <span class="text-indigo-600 text-sm font-medium">Select All</span>
+                                            </label>
+                                        </div>
+                                        <div class="relative">
+                                            <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                            <input type="text" placeholder="Search here" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md text-sm">
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #filter let-value let-filter="filterCallback">
+                                    <div class="p-3 pt-0">
+                                        <div class="space-y-2">
+                                            <div *ngFor="let type of col.filterOptions" class="flex items-center">
+                                                <p-checkbox [inputId]="type.value" [value]="type.value" [(ngModel)]="selectedTypes" (onChange)="onTypeSelectionChange(type.value, $event)" styleClass="mr-3 text-indigo-600"></p-checkbox>
+                                                <label [for]="type.value" class="text-sm cursor-pointer">{{ type.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #footer let-filter="filterCallback">
+                                    <div class="p-1">
+                                        <div class="flex justify-start border-t border-gray-200">
+                                            <p-button label="Apply Filter" size="small" (onClick)="filter(selectedTypes)" styleClass="p-button-sm w-full" />
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                        <div *ngIf="col.filterable && col.type === 'status'" class="flex justify-between items-center">
+                            <p-columnFilter [field]="col.field" matchMode="equals" display="menu">
+                                <ng-template #filter let-value let-filter="filterCallback">
+                                    <p-select [ngModel]="value" [options]="col.filterOptions" (onChange)="filter($event.value)" placeholder="Any" [style]="{ 'min-width': '12rem' }">
+                                        <ng-template let-option #item>
+                                            <span [class]="'customer-badge status-' + option.value">{{ option.label }}</span>
+                                        </ng-template>
+                                    </p-select>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                        <!-- Column header text -->
+                        <span>{{ col.header }}</span>
+                        <!-- Sort icon -->
+                        <div *ngIf="col.sortable" class="flex flex-col" style="margin-left: 6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(107,114,128,1)">
+                                <path d="M18.2072 9.0428 12.0001 2.83569 5.793 9.0428 7.20721 10.457 12.0001 5.66412 16.793 10.457 18.2072 9.0428ZM5.79285 14.9572 12 21.1643 18.2071 14.9572 16.7928 13.543 12 18.3359 7.20706 13.543 5.79285 14.9572Z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-customer let-rowIndex="rowIndex">
+            <tr>
+                <td *ngFor="let col of columns"
+                    [attr.pFrozenColumn]="col.frozen ? '' : null"
+                    [attr.alignFrozen]="col.alignFrozen || null"
+                    [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''">
+                    <!-- SL Column -->
+                    <ng-container *ngIf="col.field === 'id' && col.header === 'SL'">
+                        {{ first + rowIndex + 1 }}
+                    </ng-container>
+                    <!-- ID Column -->
+                    <ng-container *ngIf="col.field === 'id' && col.header !== 'SL'">
+                        {{ customer.id }}
+                    </ng-container>
+                    <!-- Text columns -->
+                    <ng-container *ngIf="col.type === 'text' || (!col.type && col.field !== 'id')">
+                        <span *ngIf="col.field === 'country.name'">{{ customer.country?.name }}</span>
+                        <span *ngIf="col.field === 'representative.name'">{{ customer.representative?.name }}</span>
+                        <span *ngIf="col.field === 'date'" [innerHTML]="customer.date | date: 'd MMMM y'"></span>
+                        <span *ngIf="col.field === 'timeTaken'"
+                            [ngClass]="{
+                                'text-red-500': customer.timeTaken > 20,
+                                'text-green-500': customer.timeTaken <= 20
+                            }">
+                            {{ customer.timeTaken }}
+                        </span>
+                        <input *ngIf="col.field === 'assignUnit'" type="text" pInputText placeholder="" style="width: 180px;" />
+                        <span *ngIf="col.field === 'mediaType'">
+                            <div class="flex gap-2 items-center">
+                                <button pButton type="button" label="Image" class="p-button-sm p-button-outlined pi pi-image" style="padding:8px 8px;font-size:12px;"></button>
+                                <button pButton type="button" label="Video" class="p-button-sm p-button-outlined pi pi-video" style="padding:8px 8px;font-size:12px;"></button>
+                            </div>
+                        </span>
+                        <span *ngIf="col.field === 'country.name' && col.header === 'DESCRIPTION IN BANGLA'"
+                            pTooltip="পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে  রিপ্লেনিশমেন্টের জন্য অর্ডার করুন"
+                            tooltipPosition="top"
+                            style="display:inline-block; max-width:18rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে  রিপ্লেনিশমেন্টের জন্য অর্ডার করুন
+                        </span>
+                    </ng-container>
+                    <!-- Representative column -->
+                    <ng-container *ngIf="col.type === 'representative'">
+                        <div class="flex items-center gap-2">
+                            <img [alt]="customer.representative?.name" src="/demo/images/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
+                            <span class="image-text">{{ customer.representative?.name }}</span>
+                        </div>
+                    </ng-container>
+                    <!-- Chip column -->
+                    <ng-container *ngIf="col.type === 'chip'">
+                        <div class="chip-container">
+                            <ng-container *ngIf="customer.types && customer.types.length > 0; else noTypes">
+                                <ng-container *ngFor="let type of getVisibleChips(customer.types, 1).visible">
+                                    <p-chip [label]="type" styleClass="text-xs"></p-chip>
+                                </ng-container>
+                                <p-chip
+                                    *ngIf="getVisibleChips(customer.types, 1).remaining > 0"
+                                    [label]="getVisibleChips(customer.types, 1).remaining + '+'"
+                                    styleClass="text-xs cursor-pointer chip-count"
+                                    [pTooltip]="getVisibleChips(customer.types, 1).tooltip"
+                                    tooltipPosition="top">
+                                </p-chip>
+                            </ng-container>
+                            <ng-template #noTypes>
+                                <p-chip label="No types" styleClass="text-xs chip-secondary"></p-chip>
+                            </ng-template>
+                        </div>
+                    </ng-container>
+                    <!-- Status column -->
+                    <ng-container *ngIf="col.type === 'status'">
+                        <p-tag [value]="customer.status?.toLowerCase()" [severity]="getSeverity(customer.status)" />
+                    </ng-container>
+                    <!-- Activity column -->
+                    <ng-container *ngIf="col.type === 'activity'">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="activity-circle"
+                                [ngClass]="{
+                                    'active-circle': customer.activityStatus === 'Active',
+                                    'inactive-circle': customer.activityStatus === 'Inactive'
+                                }">
+                            </div>
+                            <span>{{ customer.activityStatus || 'Unknown' }}</span>
+                        </div>
+                    </ng-container>
+                    <!-- Image column -->
+                    <ng-container *ngIf="col.type === 'image'">
+                        <img [alt]="'Test Image ' + (first + rowIndex)" [src]="getTestImage(first + rowIndex)" width="48" height="48" style="vertical-align: middle;" />
+                    </ng-container>
+                    <!-- Dropdown column -->
+                    <ng-container *ngIf="col.type === 'dropdown'">
+                        <div style="position:relative;display:inline-block;width:150px;">
+                            <select [(ngModel)]="customer.dropdownValue"
+                                style="width:100%;padding:8px 32px 8px 12px;border-radius:6px;border:1px solid #d1d5db;font-size:15px;background:#fff;color:#374151;appearance:none;transition:border-color 0.2s,box-shadow 0.2s;outline:none;"
+                                onfocus="this.style.borderColor='#6366f1';"
+                                onblur="this.style.borderColor='#d1d5db';this.style.boxShadow='';"
+                                onmouseover="this.style.borderColor='#6366f1';"
+                                onmouseout="this.style.borderColor=this === document.activeElement ? '#6366f1' : '#d1d5db';"
+                            >
+                                <option *ngFor="let option of col.dropdownOptions || dropdownOptions" [ngValue]="option.value" [ngStyle]="{'background': '#e0f2fe', 'color': '#2563eb'}">{{ option.label }}</option>
+                            </select>
+                            <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                        </div>
+                    </ng-container>
+                    <!-- Action column -->
+                    <ng-container *ngIf="col.type === 'action'">
+                        <ng-container *ngIf="!col.frozen">
+                            <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-plain action-pencil"></button>
+                            <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-plain action-trash"></button>
+                        </ng-container>
+                        <ng-container *ngIf="col.frozen">
+                            <span class="flex justify-center items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 24 24" fill="rgba(6,148,162,1)">
+                                    <path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path>
+                                </svg>
+                            </span>
+                        </ng-container>
+                    </ng-container>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Custom Pagination -->
+    <div class="flex justify-between items-center mt-4 px-4 py-3 border-t border-gray-200 custom-pagination">
+        <!-- Left side: Rows per page -->
+        <div class="flex items-center">
+            <span class="text-sm text-gray-500 mr-2">Rows per page </span>
+            <p-select
+                [ngModel]="rows"
+                [options]="rowsPerPageOptions"
+                (onChange)="onRowsPerPageChange($event.value)"
+                [style]="{ 'min-width': '60px', 'background-color': '#F9FAFB' }"
+                styleClass="text-sm">
+                <ng-template let-option #item>
+                    {{ option }}
+                </ng-template>
+            </p-select>
+            <span class="text-sm text-gray-700 ml-2">
+                {{ getDisplayRange() }}
+            </span>
+        </div>
+
+        <!-- Right side: Navigation controls -->
+        <div class="flex items-center">
+            <!-- Previous page -->
+            <button
+                pButton
+                type="button"
+                icon="pi pi-angle-left text-gray-500"
+                class="p-button-text p-button-sm p-button-left "
+                [disabled]="!canGoPrevious()"
+                (click)="goToPreviousPage()">
+            </button>
+
+            <!-- Page info -->
+            <span class="page-info-btn">
+                {{ getCurrentPage() }}
+            </span>
+
+            <!-- Next page -->
+            <button
+                pButton
+                type="button"
+                icon="pi pi-angle-right text-gray-500"
+                class="p-button-text p-button-sm p-button-right"
+                [disabled]="!canGoNext()"
+                (click)="goToNextPage()">
+            </button>
+        </div>
+    </div>
+</div>
