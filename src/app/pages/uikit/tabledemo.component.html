@@ -4,13 +4,13 @@
     <div class="font-semibold text-xl mb-4">Custom Table for JTI</div>
     <p-togglebutton [(ngModel)]="balanceFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open" [onLabel]="'ON'" offLabel='OFF' />
 
-    <p-table [value]="paginatedData" [scrollable]="scrollable" [scrollHeight]="scrollHeight" [paginator]="paginator" [rows]="rows" class="mt-4" (onSort)="onTableSort($event)">
+    <div class="overflow-x-auto relative">
+        <p-table [value]="paginatedData" [scrollable]="scrollable" [scrollHeight]="scrollHeight" [paginator]="paginator" [rows]="rows" [tableStyle]="tableStyle" class="mt-4" (onSort)="onTableSort($event)">
         <ng-template #header>
             <tr>
                 <th *ngFor="let col of columns"
                     [style.min-width]="col.width"
-                    [attr.pFrozenColumn]="col.frozen ? '' : null"
-                    [attr.alignFrozen]="col.alignFrozen || null"
+                    [class]="col.frozen ? (col.alignFrozen === 'right' ? 'p-frozen-column p-frozen-column-right' : 'p-frozen-column p-frozen-column-left') : ''"
                     [attr.pSortableColumn]="col.sortable ? col.field : null"
                     [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''">
                     <div class="flex items-center" [style.gap]="col.type === 'chip' ? '0' : ''">
@@ -101,8 +101,7 @@
         <ng-template #body let-customer let-rowIndex="rowIndex">
             <tr>
                 <td *ngFor="let col of columns"
-                    [attr.pFrozenColumn]="col.frozen ? '' : null"
-                    [attr.alignFrozen]="col.alignFrozen || null"
+                    [class]="col.frozen ? (col.alignFrozen === 'right' ? 'p-frozen-column p-frozen-column-right' : 'p-frozen-column p-frozen-column-left') : ''"
                     [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''">
                     <!-- SL Column -->
                     <ng-container *ngIf="col.field === 'id' && col.header === 'SL'">
@@ -225,6 +224,7 @@
             </tr>
         </ng-template>
     </p-table>
+    </div>
 
     <!-- Custom Pagination -->
     <div class="flex justify-between items-center mt-4 px-4 py-3 border-t border-gray-200 custom-pagination">

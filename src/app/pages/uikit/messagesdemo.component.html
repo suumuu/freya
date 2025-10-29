@@ -10,6 +10,7 @@
                 [paginator]="tableConfig.paginator"
                 [rows]="tableConfig.rows"
                 [rowsPerPageOptions]="tableConfig.rowsPerPageOptions"
+                [tableStyle]="tableConfig.tableStyle || {}"
                 (dataSelected)="onDataSelected($event)">
             </app-table-demo>
         </div>

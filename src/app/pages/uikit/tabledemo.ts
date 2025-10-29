@@ -135,6 +135,7 @@ export class TableDemo implements OnInit {
     @Input() paginator: boolean = false;
     @Input() rows: number = 10;
     @Input() rowsPerPageOptions: number[] = [5, 10, 15, 20, 25, 50];
+    @Input() tableStyle: { [key: string]: any } = {};
 
     @Output() dataSelected = new EventEmitter<any[]>();
 

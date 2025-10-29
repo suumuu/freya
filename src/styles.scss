@@ -49,3 +49,38 @@
 .p-button {
     background-color: #5850EC;
 }
+
+/* Frozen Column Styles */
+.p-frozen-column {
+    position: sticky !important;
+    background: white !important;
+    z-index: 10 !important;
+}
+
+.p-frozen-column-left {
+    left: 0 !important;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.p-frozen-column-right {
+    right: 0 !important;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Sticky Table Header for Frozen Columns */
+.p-datatable .p-datatable-thead {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    background: #F3F4F6 !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #F3F4F6 !important;
+    z-index: 21 !important;
+}
+
+/* Ensure frozen columns in header have higher z-index than body cells */
+.p-datatable .p-datatable-thead > tr > th.p-frozen-column {
+    z-index: 30 !important;
+}
