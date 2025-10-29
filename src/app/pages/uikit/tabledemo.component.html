@@ -107,9 +107,13 @@
                     <ng-container *ngIf="col.field === 'id' && col.header !== 'SL'">
                         {{ customer.id }}
                     </ng-container>
+                    <!-- CMR Column: show country name -->
+                    <ng-container *ngIf="col.header === 'CMR'">
+                        <span>{{ customer.country?.name }}</span>
+                    </ng-container>
                     <!-- Text columns -->
                     <ng-container *ngIf="col.type === 'text' || (!col.type && col.field !== 'id')">
-                        <span *ngIf="col.field === 'country.name'">{{ customer.country?.name }}</span>
+                        <span *ngIf="col.field === 'country.name' && col.header !== 'DESCRIPTION IN BANGLA'">{{ customer.country?.name }}</span>
                         <span *ngIf="col.field === 'representative.name'">{{ customer.representative?.name }}</span>
                         <span *ngIf="col.field === 'date'" [innerHTML]="customer.date | date: 'd MMMM y'"></span>
                         <span *ngIf="col.field === 'timeTaken'"
