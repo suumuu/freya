@@ -22,6 +22,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {Customer, CustomerService, Representative} from '@/pages/service/customer.service';
 import {Product, ProductService} from '@/pages/service/product.service';
 import { Paginator, PaginatorModule } from "primeng/paginator";
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -61,7 +62,8 @@ interface ColumnConfig {
     RatingModule,
     RippleModule,
     IconFieldModule,
-    PaginatorModule
+    PaginatorModule,
+    ConfirmDialogModule
 ],
     templateUrl: './tabledemo.component.html',
     styleUrls: ['./tabledemo.component.css'],
@@ -128,7 +130,8 @@ export class TableDemo implements OnInit {
     constructor(
         private customerService: CustomerService,
         private productService: ProductService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService
     ) {}
 
     ngOnInit() {
@@ -456,6 +459,37 @@ export class TableDemo implements OnInit {
     sendDataToParent(customer: any) {
         // Emit the selected customer data to parent component
         this.dataSelected.emit([customer]);
+    }
+
+    deleteCustomer(customer: any) {
+        this.confirmationService.confirm({
+            message: `Are you sure you want to delete ${customer.representative?.name || 'this customer'}?`,
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                // Remove the customer from the data array
+                const index = this.data.findIndex(c => c.id === customer.id);
+                if (index !== -1) {
+                    this.data.splice(index, 1);
+                    this.totalRecords = this.data.length;
+                    
+                    // Show success message
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Customer deleted successfully'
+                    });
+                }
+            },
+            reject: () => {
+                // User cancelled the deletion
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Cancelled',
+                    detail: 'Delete operation cancelled'
+                });
+            }
+        });
     }
 
     get paginatedData(): any[] {
