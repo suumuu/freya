@@ -89,30 +89,7 @@ export class MessagesDemo implements OnInit {
         this.editDialogVisible = true;
     }
 
-    saveEditedCustomer() {
-        if (this.editingCustomer) {
-            // Find and update the customer in the table data
-            const index = this.tableConfig.data.findIndex(c => c.id === this.editingCustomer.id);
-            if (index !== -1) {
-                this.tableConfig.data[index] = { ...this.editingCustomer };
-                
-                // Show success message
-                this.service.add({
-                    severity: 'success',
-                    summary: 'Success',
-                    detail: 'Customer updated successfully'
-                });
-            }
-            
-            this.editDialogVisible = false;
-            this.editingCustomer = null;
-        }
-    }
-
-    cancelEdit() {
-        this.editDialogVisible = false;
-        this.editingCustomer = null;
-    }
+   
 
     showInfoViaToast() {
         this.service.add({
