@@ -205,7 +205,7 @@
                     <!-- Action column -->
                     <ng-container *ngIf="col.type === 'action'">
                         <ng-container *ngIf="!col.frozen">
-                            <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-plain action-pencil"></button>
+                            <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-plain action-pencil" (click)="sendDataToParent(customer)"></button>
                             <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-plain action-trash"></button>
                         </ng-container>
                         <ng-container *ngIf="col.frozen">

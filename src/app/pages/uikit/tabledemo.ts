@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -122,6 +122,8 @@ export class TableDemo implements OnInit {
     @Input() paginator: boolean = false;
     @Input() rows: number = 10;
     @Input() rowsPerPageOptions: number[] = [5, 10, 15, 20, 25, 50];
+
+    @Output() dataSelected = new EventEmitter<any[]>();
 
     constructor(
         private customerService: CustomerService,
@@ -449,6 +451,11 @@ export class TableDemo implements OnInit {
         const start = this.first + 1;
         const end = Math.min(this.first + this.rows, this.totalRecords);
         return `${start}-${end} of ${this.totalRecords}`;
+    }
+
+    sendDataToParent(customer: any) {
+        // Emit the selected customer data to parent component
+        this.dataSelected.emit([customer]);
     }
 
     get paginatedData(): any[] {

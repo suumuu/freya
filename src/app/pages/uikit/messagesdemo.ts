@@ -1,67 +1,85 @@
 import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {MessageService, ToastMessageOptions} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
+import {TableDemo} from './tabledemo';
+import {CustomerService} from '@/pages/service/customer.service';
+
+// Import the ColumnConfig interface from tabledemo
+interface ColumnConfig {
+    field: string;
+    header: string;
+    sortable?: boolean;
+    filterable?: boolean;
+    width?: string;
+    type?: 'text' | 'image' | 'dropdown' | 'action' | 'status' | 'activity' | 'chip' | 'representative' | 'custom';
+    frozen?: boolean;
+    alignFrozen?: 'left' | 'right';
+    filterOptions?: any[];
+    dropdownOptions?: { label: string; value: any }[];
+}
 
 @Component({
     selector: 'app-messages-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule],
-    template: `
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Toast</div>
-                    <div class="flex flex-wrap gap-2">
-                        <p-button (click)="showSuccessViaToast()" label="Success" severity="success" />
-                        <p-button (click)="showInfoViaToast()" label="Info" severity="info" />
-                        <p-button (click)="showWarnViaToast()" label="Warn" severity="warn" />
-                        <p-button (click)="showErrorViaToast()" label="Error" severity="danger" />
-                        <p-toast />
-                    </div>
-
-                    <div class="font-semibold text-xl mt-4 mb-4">Inline</div>
-                    <div class="flex mb-4 gap-1">
-                        <input pInputText [(ngModel)]="username" placeholder="Username" aria-label="username" class="ng-dirty ng-invalid" />
-                        <p-message severity="error" size="small" styleClass="h-full w-full ">Username is required</p-message>
-                    </div>
-                    <div class="flex flex-wrap gap-1">
-                        <input pInputText [(ngModel)]="email" placeholder="Email" aria-label="email" class="ng-dirty ng-invalid" />
-                        <p-message severity="error" size="small" styleClass="flex items-center text-center justify-center h-full w-11">
-                            <i class="pi pi-times-circle"></i>
-                        </p-message>
-                    </div>
-                </div>
-            </div>
-            <div class="md:w-1/2">
-                <div class="card">
-                    <div class="font-semibold text-xl mb-4">Message</div>
-                    <div class="flex flex-col gap-4 mb-4">
-                        <p-message severity="success">Success Message</p-message>
-                        <p-message severity="info">Info Message</p-message>
-                        <p-message severity="warn">Warn Message</p-message>
-                        <p-message severity="error">Error Message</p-message>
-                        <p-message severity="secondary">Secondary Message</p-message>
-                        <p-message severity="contrast">Contrast Message</p-message>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `,
-    providers: [MessageService]
+    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule, TableDemo],
+    templateUrl: './messagesdemo.component.html',
+    styleUrls: ['./messagesdemo.component.css'],
+    providers: [MessageService, CustomerService]
 })
-export class MessagesDemo {
-    msgs: ToastMessageOptions[] | null = [];
-
+export class MessagesDemo implements OnInit {
     username: string | undefined;
 
     email: string | undefined;
 
-    constructor(private service: MessageService) {}
+    tableConfig: {
+        columns: ColumnConfig[];
+        data: any[];
+        scrollable: boolean;
+        scrollHeight: string;
+        paginator: boolean;
+        rows: number;
+        rowsPerPageOptions: number[];
+    } = {
+        columns: [
+            { field: 'id', header: 'SL', sortable: true, width: '80px', frozen: true },
+            { field: 'id', header: 'ID', sortable: true, width: '150px' },
+            { field: 'country.name', header: 'DESCRIPTION IN ENGLISH', sortable: true, width: '250px' },
+            { field: 'representative', header: 'CMR', filterable: true, width: '14rem' },
+            { field: 'status', header: 'STATUS', sortable: true, filterable: true, width: '150px', type: 'status' },
+            { field: 'actions', header: 'ACTION', width: '85px', type: 'action' }
+        ],
+        data: [],
+        scrollable: true,
+        scrollHeight: '400px',
+        paginator: false,
+        rows: 10,
+        rowsPerPageOptions: [5, 10, 15, 20, 25, 50]
+    };
+
+    constructor(
+        private service: MessageService,
+        private customerService: CustomerService
+    ) {}
+
+    ngOnInit() {
+        // Load sample data
+        this.customerService.getCustomersMedium().then((customers) => {
+            this.tableConfig.data = customers;
+        });
+    }
+
+    onDataSelected(data: any) {
+        this.service.add({
+            severity: 'info',
+            summary: 'Data Received',
+            detail: `Received ${data.length} items from table`
+        });
+    }
 
     showInfoViaToast() {
         this.service.add({
