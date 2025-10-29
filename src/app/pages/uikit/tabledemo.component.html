@@ -276,4 +276,54 @@
     </div>
 </div>
 
+<!-- Edit Customer Dialog -->
+<p-dialog 
+    [(visible)]="editDialogVisible" 
+    [modal]="true" 
+    [style]="{width: '500px'}" 
+    [closable]="true"
+    header="Edit Customer"
+    [draggable]="false"
+    [resizable]="false">
+    
+    <div class="flex flex-col gap-4" *ngIf="editingCustomer">
+        <div class="flex flex-col gap-2">
+            <label for="editId" class="font-medium">ID</label>
+            <input pInputText id="editId" [(ngModel)]="editingCustomer.id" disabled class="w-full" />
+        </div>
+        
+        <div class="flex flex-col gap-2">
+            <label for="editName" class="font-medium">Name</label>
+            <input pInputText id="editName" [(ngModel)]="editingCustomer.name" class="w-full" placeholder="Enter customer name" />
+        </div>
+        
+        <div class="flex flex-col gap-2">
+            <label for="editCountry" class="font-medium">Country</label>
+            <input pInputText id="editCountry" [(ngModel)]="editingCustomer.country.name" class="w-full" placeholder="Enter country" />
+        </div>
+        
+        <div class="flex flex-col gap-2">
+            <label for="editRepresentative" class="font-medium">Representative</label>
+            <input pInputText id="editRepresentative" [(ngModel)]="editingCustomer.representative.name" class="w-full" placeholder="Enter representative name" />
+        </div>
+        
+        <div class="flex flex-col gap-2">
+            <label for="editStatus" class="font-medium">Status</label>
+            <select [(ngModel)]="editingCustomer.status" class="w-full p-2 border border-gray-300 rounded-md">
+                <option value="qualified">Qualified</option>
+                <option value="unqualified">Unqualified</option>
+                <option value="new">New</option>
+                <option value="negotiation">Negotiation</option>
+                <option value="renewal">Renewal</option>
+                <option value="proposal">Proposal</option>
+            </select>
+        </div>
+    </div>
+    
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" icon="pi pi-times" (click)="cancelEdit()" styleClass="p-button-text" />
+        <p-button label="Save" icon="pi pi-check" (click)="saveEditedCustomer()" styleClass="p-button-primary" />
+    </ng-template>
+</p-dialog>
+
 <p-confirmDialog></p-confirmDialog>

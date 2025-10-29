@@ -23,6 +23,7 @@ import {Customer, CustomerService, Representative} from '@/pages/service/custome
 import {Product, ProductService} from '@/pages/service/product.service';
 import { Paginator, PaginatorModule } from "primeng/paginator";
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -63,7 +64,8 @@ interface ColumnConfig {
     RippleModule,
     IconFieldModule,
     PaginatorModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule
 ],
     templateUrl: './tabledemo.component.html',
     styleUrls: ['./tabledemo.component.css'],
@@ -119,6 +121,10 @@ export class TableDemo implements OnInit {
         { label: 'Action B', value: 'action_b' },
         { label: 'Action C', value: 'action_c' }
     ];
+
+    // Edit dialog properties
+    editDialogVisible: boolean = false;
+    editingCustomer: any = null;
 
     @ViewChild('filter') filter!: ElementRef;
 
@@ -550,8 +556,38 @@ export class TableDemo implements OnInit {
     }
 
     sendDataToParent(customer: any) {
-        // Emit the selected customer data to parent component
-        this.dataSelected.emit([customer]);
+        // Open edit dialog instead of emitting data
+        this.openEditDialog(customer);
+    }
+
+    openEditDialog(customer: any) {
+        this.editingCustomer = { ...customer }; // Create a copy to avoid direct mutation
+        this.editDialogVisible = true;
+    }
+
+    saveEditedCustomer() {
+        if (this.editingCustomer) {
+            // Find and update the customer in the data array
+            const index = this.data.findIndex(c => c.id === this.editingCustomer.id);
+            if (index !== -1) {
+                this.data[index] = { ...this.editingCustomer };
+                
+                // Show success message
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Customer updated successfully'
+                });
+            }
+            
+            this.editDialogVisible = false;
+            this.editingCustomer = null;
+        }
+    }
+
+    cancelEdit() {
+        this.editDialogVisible = false;
+        this.editingCustomer = null;
     }
 
     deleteCustomer(customer: any) {

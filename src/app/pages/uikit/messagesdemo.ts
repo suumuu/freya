@@ -6,6 +6,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
+import {DialogModule} from 'primeng/dialog';
 import {TableDemo} from './tabledemo';
 import {CustomerService} from '@/pages/service/customer.service';
 
@@ -26,7 +27,7 @@ interface ColumnConfig {
 @Component({
     selector: 'app-messages-demo',
     standalone: true,
-    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule, TableDemo],
+    imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule, DialogModule, TableDemo],
     templateUrl: './messagesdemo.component.html',
     styleUrls: ['./messagesdemo.component.css'],
     providers: [MessageService, CustomerService]
@@ -35,6 +36,10 @@ export class MessagesDemo implements OnInit {
     username: string | undefined;
 
     email: string | undefined;
+
+    // Edit dialog properties
+    editDialogVisible: boolean = false;
+    editingCustomer: any = null;
 
     tableConfig: {
         columns: ColumnConfig[];
@@ -74,11 +79,39 @@ export class MessagesDemo implements OnInit {
     }
 
     onDataSelected(data: any) {
-        this.service.add({
-            severity: 'info',
-            summary: 'Data Received',
-            detail: `Received ${data.length} items from table`
-        });
+        if (data && data.length > 0) {
+            this.openEditDialog(data[0]);
+        }
+    }
+
+    openEditDialog(customer: any) {
+        this.editingCustomer = { ...customer }; // Create a copy to avoid direct mutation
+        this.editDialogVisible = true;
+    }
+
+    saveEditedCustomer() {
+        if (this.editingCustomer) {
+            // Find and update the customer in the table data
+            const index = this.tableConfig.data.findIndex(c => c.id === this.editingCustomer.id);
+            if (index !== -1) {
+                this.tableConfig.data[index] = { ...this.editingCustomer };
+                
+                // Show success message
+                this.service.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Customer updated successfully'
+                });
+            }
+            
+            this.editDialogVisible = false;
+            this.editingCustomer = null;
+        }
+    }
+
+    cancelEdit() {
+        this.editDialogVisible = false;
+        this.editingCustomer = null;
     }
 
     showInfoViaToast() {
