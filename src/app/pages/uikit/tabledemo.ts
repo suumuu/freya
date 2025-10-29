@@ -108,6 +108,11 @@ export class TableDemo implements OnInit {
     first: number = 0;
     totalRecords: number = 0;
 
+    // Sorting properties
+    sortField: string = '';
+    sortOrder: number = 1; // 1 for ascending, -1 for descending
+    hoveredColumn: string = ''; // Track which column is being hovered
+
     // Dropdown options used by the p-select in the table rows
     dropdownOptions: { label: string; value: any }[] = [
         { label: 'Action A', value: 'action_a' },
@@ -214,18 +219,18 @@ export class TableDemo implements OnInit {
                 { field: 'id', header: 'SL', sortable: true, width: '80px', frozen: true },
                 { field: 'id', header: 'ID', sortable: true, width: '150px' },
                 { field: 'country.name', header: 'DESCRIPTION IN ENGLISH', sortable: true, width: '250px' },
-                { field: 'representative', header: 'CMR', filterable: true, width: '14rem', filterOptions: this.representatives },
+                { field: 'representative', header: 'CMR', filterable: true, sortable: true, width: '14rem', filterOptions: this.representatives },
                 { field: 'country.name', header: 'DESCRIPTION IN BANGLA', sortable: true, width: '250px' },
-                { field: 'types', header: 'TYPE', filterable: true, width: '260px', type: 'chip', filterOptions: this.types },
+                { field: 'types', header: 'TYPE', filterable: true, sortable: true, width: '260px', type: 'chip', filterOptions: this.types },
                 { field: 'status', header: 'STATUS', sortable: true, filterable: true, width: '150px', type: 'status', filterOptions: this.statuses },
                 { field: 'activityStatus', header: 'ACTIVITY', sortable: true, width: '200px', type: 'activity' },
                 { field: 'representative.name', header: 'REPRESENTATIVE', sortable: true, width: '200px' },
                 { field: 'image', header: 'IMAGE', width: '85px', type: 'image' },
-                { field: 'mediaType', header: 'MEDIA TYPE', width: '85px' },
-                { field: 'date', header: 'DATE', width: '85px' },
-                { field: 'timeTaken', header: 'TIME TAKEN', width: '85px' },
-                { field: 'assignUnit', header: 'ASSIGN UNIT TO', width: '85px' },
-                { field: 'dropdownValue', header: 'DROPDOWN', width: '85px', type: 'dropdown', dropdownOptions: this.dropdownOptions },
+                { field: 'mediaType', header: 'MEDIA TYPE', sortable: true, width: '85px' },
+                { field: 'date', header: 'DATE', sortable: true, width: '85px' },
+                { field: 'timeTaken', header: 'TIME TAKEN', sortable: true, width: '85px' },
+                { field: 'assignUnit', header: 'ASSIGN UNIT TO', sortable: true, width: '85px' },
+                { field: 'dropdownValue', header: 'DROPDOWN', sortable: true, width: '85px', type: 'dropdown', dropdownOptions: this.dropdownOptions },
                 { field: 'actions', header: 'ACTION', width: '85px', type: 'action' },
                 { field: 'actions', header: 'ACTION', width: '85px', type: 'action', frozen: true, alignFrozen: 'right' }
             ];
@@ -398,6 +403,94 @@ export class TableDemo implements OnInit {
         ];
         
         return testImages[index % testImages.length];
+    }
+
+    // Custom sort functions for complex fields
+    sortByRepresentative(a: any, b: any): number {
+        const nameA = a.representative?.name || '';
+        const nameB = b.representative?.name || '';
+        return nameA.localeCompare(nameB);
+    }
+
+    sortByTypes(a: any, b: any): number {
+        const typesA = Array.isArray(a.types) ? a.types.join(', ') : '';
+        const typesB = Array.isArray(b.types) ? b.types.join(', ') : '';
+        return typesA.localeCompare(typesB);
+    }
+
+    onTableSort(event: any) {
+        const field = event.field;
+        const order = event.order; // 1 for ascending, -1 for descending
+
+        if (field === 'representative') {
+            this.data.sort((a, b) => {
+                const nameA = a.representative?.name || '';
+                const nameB = b.representative?.name || '';
+                const result = nameA.localeCompare(nameB);
+                return order === 1 ? result : -result;
+            });
+        } else if (field === 'types') {
+            this.data.sort((a, b) => {
+                const typesA = Array.isArray(a.types) ? a.types.join(', ') : '';
+                const typesB = Array.isArray(b.types) ? b.types.join(', ') : '';
+                const result = typesA.localeCompare(typesB);
+                return order === 1 ? result : -result;
+            });
+        }
+        // For other fields, let PrimeNG handle default sorting
+    }
+
+    sortColumn(column: ColumnConfig) {
+        // Toggle sort order for the clicked column
+        if (!this.sortField || this.sortField !== column.field) {
+            this.sortField = column.field;
+            this.sortOrder = 1; // ascending
+        } else {
+            this.sortOrder = this.sortOrder === 1 ? -1 : 1; // toggle between ascending and descending
+        }
+
+        // Apply sorting
+        this.applySorting(column.field, this.sortOrder);
+    }
+
+    onSortIconMouseEnter(columnField: string) {
+        this.hoveredColumn = columnField;
+    }
+
+    onSortIconMouseLeave() {
+        this.hoveredColumn = '';
+    }
+
+    private applySorting(field: string, order: number) {
+        if (field === 'representative') {
+            this.data.sort((a, b) => {
+                const nameA = a.representative?.name || '';
+                const nameB = b.representative?.name || '';
+                const result = nameA.localeCompare(nameB);
+                return order === 1 ? result : -result;
+            });
+        } else if (field === 'types') {
+            this.data.sort((a, b) => {
+                const typesA = Array.isArray(a.types) ? a.types.join(', ') : '';
+                const typesB = Array.isArray(b.types) ? b.types.join(', ') : '';
+                const result = typesA.localeCompare(typesB);
+                return order === 1 ? result : -result;
+            });
+        } else {
+            // Default sorting for other fields
+            this.data.sort((a, b) => {
+                const valueA = this.getFieldValue(a, field);
+                const valueB = this.getFieldValue(b, field);
+                
+                if (valueA < valueB) return order === 1 ? -1 : 1;
+                if (valueA > valueB) return order === 1 ? 1 : -1;
+                return 0;
+            });
+        }
+    }
+
+    private getFieldValue(obj: any, field: string): any {
+        return field.split('.').reduce((current, key) => current?.[key], obj);
     }
 
     // Pagination methods

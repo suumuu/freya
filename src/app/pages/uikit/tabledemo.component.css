@@ -49,6 +49,25 @@
     flex-wrap: nowrap !important;
 }
 
+/* Custom sort icon styling */
+.sort-icon-container {
+    transition: all 0.2s ease-in-out !important;
+}
+
+.sort-icon-container svg {
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* Active sort icon styling */
+.sort-icon-container.active svg {
+    color: #3b82f6 !important; /* blue-500 */
+}
+
+/* Hover sort icon styling */
+.sort-icon-container.hover svg {
+    color: #9ca3af !important; /* gray-400 */
+}
+
 /* Type column data - keep chips in single line */
 ::ng-deep .p-datatable tbody td {
     white-space: nowrap !important;
