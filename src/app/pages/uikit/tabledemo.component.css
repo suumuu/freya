@@ -1,14 +1,21 @@
 * {
     font-family: 'Inter', sans-serif !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
 }
 
 /* Preserve icon fonts for sorting and UI icons */
-.pi, [class*="pi-"], .ri, [class*="ri-"] {
+.pi,
+[class*='pi-'],
+.ri,
+[class*='ri-'] {
     font-family: 'primeicons', 'remixicon' !important;
 }
 
 /* Ensure sorting icons are visible and properly styled */
-.pi.pi-angle-up, .pi.pi-angle-down {
+.pi.pi-angle-up,
+.pi.pi-angle-down {
     font-family: 'primeicons' !important;
     font-size: 12px !important;
     display: inline-block !important;
@@ -23,7 +30,84 @@
 }
 
 /* Column header styling for single line and auto width */
-::ng-deep .p-datatable thead th {
+
+.card {
+    border-radius: 8px !important;
+}
+
+.main-title-section {
+    padding: 16px !important;
+    border-bottom: 1px solid var(--gray-200, #e5e7eb);
+}
+
+.main-title {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.title-search-icon {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: var(--3, 12px) var(--2, 8px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--2, 8px);
+    border-radius: 20px;
+    background: var(--gray-100, #f3f4f6);
+}
+
+.primary-button {
+    display: flex;
+    padding: var(--2, 8px) 16px var(--2, 8px) 12px !important;
+    justify-content: center;
+    align-items: center;
+    gap: var(--2, 8px);
+    border-radius: var(--rounded-lg, 8px);
+    background: var(--indigo-600, #5850ec);
+    color: var(--white, var(--white, #fff));
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.secondary-button {
+    display: flex;
+    padding: var(--2, 8px) 16px var(--2, 8px) 12px !important;
+    justify-content: center;
+    align-items: center;
+    gap: var(--2, 8px);
+    border-radius: var(--rounded-lg, 8px);
+    border: 1px solid var(--gray-200, #e5e7eb);
+    background: var(--gray-100, #f3f4f6);
+    color: var(--gray-900, #111928);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.table-container {
+    display: flex;
+    padding: var(--5, 20px) 16px var(--9, 36px) 16px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--5, 20px);
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.col-header {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: var(--3, 12px) var(--4, 16px) !important;
+    align-items: center;
+    gap: var(--15, 6px);
+    background: var(--gray-100, #f3f4f6);
+}
+
+/* ::ng-deep .p-datatable thead th {
     white-space: nowrap !important;
     width: auto !important;
     min-width: auto !important;
@@ -32,11 +116,11 @@
     max-height: 44px !important;
     box-sizing: border-box !important;
     vertical-align: middle !important;
-}
+} */
 
-::ng-deep .p-datatable thead tr {
+/* ::ng-deep .p-datatable thead tr {
     height: 44px !important;
-}
+} */
 
 ::ng-deep .p-datatable thead th > div {
     white-space: nowrap !important;
@@ -71,6 +155,7 @@
 /* Type column data - keep chips in single line */
 ::ng-deep .p-datatable tbody td {
     white-space: nowrap !important;
+    padding:2px 16px !important;
 }
 
 ::ng-deep .p-datatable tbody td .flex {
@@ -144,6 +229,18 @@
     z-index: 9999 !important;
 }
 
+::ng-deep .p-tag-label{
+    padding: 2px 8px !important;
+}
+
+::ng-deep .p-button-sm.p-button-outlined.pi.pi-image.p-button.p-component {
+padding: 2px 8px !important;
+}
+
+::ng-deep .p-button-sm.p-button-outlined.pi.pi-video.p-button.p-component {
+padding: 2px 8px !important;
+}
+
 /* Custom Pagination Styles */
 ::ng-deep .custom-pagination .p-select {
     min-height: 32px !important;
@@ -180,7 +277,7 @@
 ::ng-deep .custom-pagination .page-info-btn {
     border: 1.5px solid #e0e7ff !important; /* indigo-100 */
     border-radius: 0px !important;
-    background: #E5EDFF !important; /* indigo-100 */
+    background: #e5edff !important; /* indigo-100 */
     min-width: 32px !important;
     height: 32px !important;
     display: flex !important;
@@ -188,7 +285,7 @@
     justify-content: center !important;
     font-size: 15px !important;
     font-weight: 500 !important;
-    color: #5850EC !important; /* indigo-600 */
+    color: #5850ec !important; /* indigo-600 */
 }
 
 /* Activity status circles */
@@ -201,20 +298,20 @@
 }
 
 .active-circle {
-    background-color: #0E9F6E !important; /* Green color for Active */
+    background-color: #0e9f6e !important; /* Green color for Active */
 }
 
 .inactive-circle {
-    background-color: #F05252 !important; /* Red color for Inactive */
+    background-color: #f05252 !important; /* Red color for Inactive */
 }
 
 /* Action button icon colors */
 ::ng-deep .action-pencil .pi {
-    color: #6875F5 !important; /* Pencil color */
+    color: #6875f5 !important; /* Pencil color */
 }
 
 ::ng-deep .action-trash .pi {
-    color: #F05252 !important; /* Trash color */
+    color: #f05252 !important; /* Trash color */
 }
 
 /* Custom Status Tag Colors */

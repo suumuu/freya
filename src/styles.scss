@@ -9,46 +9,46 @@
 
 
 /* Global PrimeNG Table Header Styling */
-.p-datatable .p-datatable-thead > tr > th {
-    background: #F3F4F6 !important; 
-    color: #374151 !important; 
-    border-color: #D1D5DB !important;
-    font-weight: 600;
-}
+// .p-datatable .p-datatable-thead > tr > th {
+//     background: #F3F4F6 !important; 
+//     color: #374151 !important; 
+//     border-color: #D1D5DB !important;
+//     font-weight: 600;
+// }
 
-.p-datatable .p-datatable-thead > tr > th:hover {
-    background: #E5E7EB !important;
-}
+// .p-datatable .p-datatable-thead > tr > th:hover {
+//     background: #E5E7EB !important;
+// }
 
-.p-datatable-thead > tr > th.p-datatable-column-sorted{
-  background: #F3F4F6 !important; 
-  color: #374151 !important; 
-}
-.p-ripple.p-button.p-button-sm.p-component {
-    background-color: #4F46E5;
-    border-color: #4F46E5;
-    color: #FFFFFF;
-}
+// .p-datatable-thead > tr > th.p-datatable-column-sorted{
+//   background: #F3F4F6 !important; 
+//   color: #374151 !important; 
+// }
+// .p-ripple.p-button.p-button-sm.p-component {
+//     background-color: #4F46E5;
+//     border-color: #4F46E5;
+//     color: #FFFFFF;
+// }
 
-.p-checkbox-checked .p-checkbox-box{
-    background-color: #4F46E5!important;
-    border-color: #4F46E5!important;
-}
+// .p-checkbox-checked .p-checkbox-box{
+//     background-color: #4F46E5!important;
+//     border-color: #4F46E5!important;
+// }
 
-.p-button-icon-only.p-button-rounded{
-    height: .5rem!important;
-    border:none!important;  
-    background-color: transparent!important;
-    align-items: center!important;
-}
-.p-button-text.p-button-secondary:not(:disabled):active {
-    background-color: transparent!important;
-}
+// .p-button-icon-only.p-button-rounded{
+//     height: .5rem!important;
+//     border:none!important;  
+//     background-color: transparent!important;
+//     align-items: center!important;
+// }
+// .p-button-text.p-button-secondary:not(:disabled):active {
+//     background-color: transparent!important;
+// }
 
 
-.p-button {
-    background-color: #5850EC;
-}
+// .p-button {
+//     background-color: #5850EC;
+// }
 
 /* Frozen Column Styles */
 .p-frozen-column {
@@ -77,10 +77,10 @@
 
 .p-datatable .p-datatable-thead > tr > th {
     background: #F3F4F6 !important;
-    z-index: 21 !important;
+    // z-index: 21 !important;
 }
 
 /* Ensure frozen columns in header have higher z-index than body cells */
-.p-datatable .p-datatable-thead > tr > th.p-frozen-column {
-    z-index: 30 !important;
-}
+// .p-datatable .p-datatable-thead > tr > th.p-frozen-column {
+//     z-index: 30 !important;
+// }
