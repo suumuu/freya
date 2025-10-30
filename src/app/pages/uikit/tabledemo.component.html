@@ -45,7 +45,7 @@
 
     <div class="table-container">
         <div class="text-gray-700 text-sm font-medium">13 Results</div>
-        <div style="overflow-x: auto; width: 100%;">
+        <div style="overflow-x: auto; width: 100%; margin-top: 20px !important">
             <p-table [value]="paginatedData" [scrollable]="true" scrollDirection="horizontal" [scrollHeight]="scrollHeight || 'auto'" [paginator]="paginator" [rows]="rows" [tableStyle]="tableStyle" class="mt-4 min-w-max" (onSort)="onTableSort($event)" style="border-radius: 8px; min-width: 900px; overflow: auto; border: 1px solid #E5E7EB;">
             <ng-template #header>
                 <tr>
@@ -333,9 +333,9 @@
             </p-table>
         </div>
         <!-- Custom Pagination -->
-    <div class="flex items-center mt-4 px-4 py-3 border-t border-gray-200 custom-pagination w-full">
+    <div class="flex items-center mt-4 px-4 py-3 custom-pagination w-full">
             <!-- Left side: Rows per page -->
-            <div class="flex items-center">
+            <div class="flex items-center w-full gap-2.5">
                 <span class="text-sm text-gray-500 mr-2">Rows per page </span>
                 <p-select [ngModel]="rows" [options]="rowsPerPageOptions" (onChange)="onRowsPerPageChange($event.value)" [style]="{ 'min-width': '60px', 'background-color': '#F9FAFB' }" styleClass="text-sm">
                     <ng-template let-option #item>
