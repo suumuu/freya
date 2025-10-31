@@ -4,24 +4,79 @@
     <div class="flex main-title-section justify-between">
         <div class="flex align-middle gap-3">
             <div class="font-semibold text-xl mb-4 text-gray-900 align-middle main-title">Custom Table for JTI</div>
-            <div class="title-search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <g clip-path="url(#clip0_40000297_1319)">
-                        <path
-                            d="M8.0001 16C6.41783 16 4.87109 15.5308 3.55548 14.6518C2.23987 13.7727 1.21448 12.5233 0.608974 11.0615C0.00346629 9.59966 -0.154962 7.99112 0.153723 6.43928C0.462409 4.88743 1.22434 3.46197 2.34318 2.34315C3.46201 1.22433 4.88749 0.462403 6.43936 0.153721C7.99122 -0.15496 9.59977 0.00346625 11.0616 0.608967C12.5234 1.21447 13.7729 2.23985 14.6519 3.55544C15.531 4.87103 16.0002 6.41775 16.0002 8C15.9978 10.121 15.1542 12.1544 13.6544 13.6542C12.1546 15.154 10.1211 15.9976 8.0001 16ZM8.0001 2C6.8134 2 5.65334 2.3519 4.66664 3.01118C3.67993 3.67047 2.91089 4.60754 2.45675 5.7039C2.00262 6.80026 1.8838 8.00665 2.11532 9.17054C2.34683 10.3344 2.91828 11.4035 3.75741 12.2426C4.59653 13.0818 5.66564 13.6532 6.82954 13.8847C7.99344 14.1162 9.19985 13.9974 10.2962 13.5433C11.3926 13.0891 12.3297 12.3201 12.989 11.3334C13.6483 10.3467 14.0002 9.18669 14.0002 8C13.9986 6.40919 13.3659 4.88399 12.241 3.75912C11.1161 2.63424 9.59093 2.00159 8.0001 2Z"
-                            fill="#6B7280"
-                        />
-                        <path
-                            d="M19.0002 20C18.735 19.9999 18.4807 19.8946 18.2932 19.707L14.2931 15.707C14.111 15.5184 14.0102 15.2658 14.0125 15.0036C14.0147 14.7414 14.1199 14.4906 14.3053 14.3052C14.4907 14.1198 14.7416 14.0146 15.0038 14.0123C15.266 14.01 15.5186 14.1108 15.7072 14.293L19.7072 18.293C19.847 18.4329 19.9422 18.611 19.9808 18.805C20.0194 18.9989 19.9996 19.2 19.9239 19.3827C19.8482 19.5654 19.7201 19.7215 19.5557 19.8314C19.3913 19.9413 19.198 20 19.0002 20Z"
-                            fill="#6B7280"
-                        />
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_40000297_1319">
-                            <rect width="20" height="20" fill="white" />
-                        </clipPath>
-                    </defs>
-                </svg>
+            <div class="title-search-icon" style="position: relative">
+                <ng-container *ngIf="!showSearchBar">
+                    <svg (click)="showSearchBar = true" class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <g clip-path="url(#clip0_40000297_1319)">
+                            <path
+                                d="M8.0001 16C6.41783 16 4.87109 15.5308 3.55548 14.6518C2.23987 13.7727 1.21448 12.5233 0.608974 11.0615C0.00346629 9.59966 -0.154962 7.99112 0.153723 6.43928C0.462409 4.88743 1.22434 3.46197 2.34318 2.34315C3.46201 1.22433 4.88749 0.462403 6.43936 0.153721C7.99122 -0.15496 9.59977 0.00346625 11.0616 0.608967C12.5234 1.21447 13.7729 2.23985 14.6519 3.55544C15.531 4.87103 16.0002 6.41775 16.0002 8C15.9978 10.121 15.1542 12.1544 13.6544 13.6542C12.1546 15.154 10.1211 15.9976 8.0001 16ZM8.0001 2C6.8134 2 5.65334 2.3519 4.66664 3.01118C3.67993 3.67047 2.91089 4.60754 2.45675 5.7039C2.00262 6.80026 1.8838 8.00665 2.11532 9.17054C2.34683 10.3344 2.91828 11.4035 3.75741 12.2426C4.59653 13.0818 5.66564 13.6532 6.82954 13.8847C7.99344 14.1162 9.19985 13.9974 10.2962 13.5433C11.3926 13.0891 12.3297 12.3201 12.989 11.3334C13.6483 10.3467 14.0002 9.18669 14.0002 8C13.9986 6.40919 13.3659 4.88399 12.241 3.75912C11.1161 2.63424 9.59093 2.00159 8.0001 2Z"
+                                fill="#6B7280"
+                            />
+                            <path
+                                d="M19.0002 20C18.735 19.9999 18.4807 19.8946 18.2932 19.707L14.2931 15.707C14.111 15.5184 14.0102 15.2658 14.0125 15.0036C14.0147 14.7414 14.1199 14.4906 14.3053 14.3052C14.4907 14.1198 14.7416 14.0146 15.0038 14.0123C15.266 14.01 15.5186 14.1108 15.7072 14.293L19.7072 18.293C19.847 18.4329 19.9422 18.611 19.9808 18.805C20.0194 18.9989 19.9996 19.2 19.9239 19.3827C19.8482 19.5654 19.7201 19.7215 19.5557 19.8314C19.3913 19.9413 19.198 20 19.0002 20Z"
+                                fill="#6B7280"
+                            />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_40000297_1319">
+                                <rect width="20" height="20" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </ng-container>
+                <ng-container *ngIf="showSearchBar">
+                    <div
+                        class="search-bar-animated"
+                        style="
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            z-index: 10;
+                            display: flex;
+                            align-items: center;
+                            background: #fafbff;
+                            border: 2px solid #6366f1;
+                            border-radius: 8px;
+                            height: 40px;
+                            width: 320px;
+                            box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.08);
+                            padding: 12px 16px !important;
+                            gap: 8px;
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <g clip-path="url(#clip0_40000317_7038)">
+                                <path
+                                    d="M8.0001 16C6.41783 16 4.87109 15.5308 3.55548 14.6518C2.23987 13.7727 1.21448 12.5233 0.608974 11.0615C0.00346629 9.59966 -0.154962 7.99112 0.153723 6.43928C0.462409 4.88743 1.22434 3.46197 2.34318 2.34315C3.46201 1.22433 4.88749 0.462403 6.43936 0.153721C7.99122 -0.15496 9.59977 0.00346625 11.0616 0.608967C12.5234 1.21447 13.7729 2.23985 14.6519 3.55544C15.531 4.87103 16.0002 6.41775 16.0002 8C15.9978 10.121 15.1542 12.1544 13.6544 13.6542C12.1546 15.154 10.1211 15.9976 8.0001 16ZM8.0001 2C6.8134 2 5.65334 2.3519 4.66664 3.01118C3.67993 3.67047 2.91089 4.60754 2.45675 5.7039C2.00262 6.80026 1.8838 8.00665 2.11532 9.17054C2.34683 10.3344 2.91828 11.4035 3.75741 12.2426C4.59653 13.0818 5.66564 13.6532 6.82954 13.8847C7.99344 14.1162 9.19985 13.9974 10.2962 13.5433C11.3926 13.0891 12.3297 12.3201 12.989 11.3334C13.6483 10.3467 14.0002 9.18669 14.0002 8C13.9986 6.40919 13.3659 4.88399 12.241 3.75912C11.1161 2.63424 9.59093 2.00159 8.0001 2Z"
+                                    fill="#6B7280"
+                                />
+                                <path
+                                    d="M19.0002 20C18.735 19.9999 18.4807 19.8946 18.2932 19.707L14.2931 15.707C14.111 15.5184 14.0102 15.2658 14.0125 15.0036C14.0147 14.7414 14.1199 14.4906 14.3053 14.3052C14.4907 14.1198 14.7416 14.0146 15.0038 14.0123C15.266 14.01 15.5186 14.1108 15.7072 14.293L19.7072 18.293C19.847 18.4329 19.9422 18.611 19.9808 18.805C20.0194 18.9989 19.9996 19.2 19.9239 19.3827C19.8482 19.5654 19.7201 19.7215 19.5557 19.8314C19.3913 19.9413 19.198 20 19.0002 20Z"
+                                    fill="#6B7280"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_40000317_7038">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        <input [(ngModel)]="searchValue" type="text" placeholder="Search..." style="border: none; outline: none; background: transparent; font-size: 16px; color: #374151; flex: 1; height: 36px;" />
+                        <svg (click)="searchValue = ''" class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <g clip-path="url(#clip0_40000317_7043)">
+                                <path
+                                    d="M9.45185 7.99999L14.8865 2.5653C14.9846 2.47058 15.0628 2.35728 15.1166 2.23201C15.1705 2.10674 15.1988 1.97201 15.2 1.83568C15.2011 1.69935 15.1752 1.56414 15.1235 1.43795C15.0719 1.31177 14.9957 1.19713 14.8993 1.10072C14.8029 1.00432 14.6882 0.928074 14.562 0.876447C14.4358 0.824821 14.3006 0.798842 14.1643 0.800027C14.028 0.801211 13.8932 0.829536 13.768 0.883348C13.6427 0.93716 13.5294 1.01538 13.4347 1.11345L8 6.54814L2.56531 1.11345C2.37166 0.926414 2.1123 0.822921 1.84308 0.825261C1.57387 0.8276 1.31634 0.935585 1.12597 1.12596C0.9356 1.31633 0.827615 1.57385 0.825276 1.84307C0.822936 2.11228 0.926429 2.37165 1.11346 2.5653L6.54815 7.99999L1.11346 13.4347C1.0154 13.5294 0.937175 13.6427 0.883363 13.768C0.829551 13.8932 0.801227 14.028 0.800042 14.1643C0.798857 14.3006 0.824836 14.4358 0.876463 14.562C0.92809 14.6882 1.00433 14.8028 1.10074 14.8993C1.19714 14.9957 1.31178 15.0719 1.43797 15.1235C1.56416 15.1752 1.69936 15.2011 1.83569 15.1999C1.97203 15.1988 2.10676 15.1704 2.23203 15.1166C2.3573 15.0628 2.4706 14.9846 2.56531 14.8865L8 9.45184L13.4347 14.8865C13.6283 15.0736 13.8877 15.1771 14.1569 15.1747C14.4261 15.1724 14.6837 15.0644 14.874 14.874C15.0644 14.6836 15.1724 14.4261 15.1747 14.1569C15.1771 13.8877 15.0736 13.6283 14.8865 13.4347L9.45185 7.99999Z"
+                                    fill="#6B7280"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_40000317_7043">
+                                    <rect width="16" height="16" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                </ng-container>
             </div>
         </div>
         <div class="flex gap-3 ms-auto">
@@ -46,19 +101,30 @@
     <div class="table-container">
         <div class="text-gray-700 text-sm font-medium">13 Results</div>
         <div style="overflow-x: auto; width: 100%; margin-top: 20px !important">
-            <p-table [value]="paginatedData" [scrollable]="true" scrollDirection="horizontal" [scrollHeight]="scrollHeight || 'auto'" [paginator]="paginator" [rows]="rows" [tableStyle]="tableStyle" class="mt-4 min-w-max" (onSort)="onTableSort($event)" style="border-radius: 8px; min-width: 900px; overflow: auto; border: 1px solid #E5E7EB;">
-            <ng-template #header>
-                <tr>
-                    <th
-                        *ngFor="let col of columns"
-                        [style.min-width]="col.width"
-                        [class]="col.frozen ? (col.alignFrozen === 'right' ? 'p-frozen-column p-frozen-column-right' : 'p-frozen-column p-frozen-column-left') : ''"
-                        [attr.pSortableColumn]="col.sortable ? col.field : null"
-                        [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''"
-                    >
-                        <div class="col-header flex items-center" [style.gap]="col.type === 'chip' ? '' : ''">
-                            <!-- Column filters for specific types -->
-                            <!-- <div *ngIf="col.filterable && col.type === 'representative'" class="flex items-center">
+            <p-table
+                [value]="paginatedData"
+                [scrollable]="true"
+                scrollDirection="horizontal"
+                [scrollHeight]="scrollHeight || 'auto'"
+                [paginator]="paginator"
+                [rows]="rows"
+                [tableStyle]="tableStyle"
+                class="mt-4 min-w-max"
+                (onSort)="onTableSort($event)"
+                style="border-radius: 8px; min-width: 900px; overflow: auto; border: 1px solid #e5e7eb"
+            >
+                <ng-template #header>
+                    <tr>
+                        <th
+                            *ngFor="let col of columns"
+                            [style.min-width]="col.width"
+                            [class]="col.frozen ? (col.alignFrozen === 'right' ? 'p-frozen-column p-frozen-column-right' : 'p-frozen-column p-frozen-column-left') : ''"
+                            [attr.pSortableColumn]="col.sortable ? col.field : null"
+                            [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''"
+                        >
+                            <div class="col-header flex items-center" [style.gap]="col.type === 'chip' ? '' : ''">
+                                <!-- Column filters for specific types -->
+                                <!-- <div *ngIf="col.filterable && col.type === 'representative'" class="flex items-center">
                                 <p-columnFilter [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="p-0">
                                     <ng-template #header>
                                         <div class="px-4 pt-4 pb-0">
@@ -125,219 +191,254 @@
                                 </p-columnFilter>
                             </div> -->
 
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                <path
-                                    d="M7.33141 12C7.18816 12 7.04878 11.9545 6.93417 11.8703L4.27135 9.92432C4.18912 9.8639 4.12238 9.78556 4.07642 9.69549C4.03045 9.60542 4.00652 9.5061 4.00652 9.40541V7.02486L0.259893 2.06919C0.114011 1.87612 0.0257058 1.64717 0.00481566 1.40783C-0.0160745 1.16849 0.0312713 0.928172 0.141578 0.713644C0.251884 0.499116 0.420819 0.318806 0.62956 0.192804C0.838302 0.0668009 1.07865 5.42111e-05 1.32383 0H10.6762C10.9213 5.42111e-05 11.1617 0.0668009 11.3704 0.192804C11.5792 0.318806 11.7481 0.499116 11.8584 0.713644C11.9687 0.928172 12.0161 1.16849 11.9952 1.40783C11.9743 1.64717 11.886 1.87612 11.7401 2.06919L7.99348 7.02486V11.3514C7.99348 11.5234 7.92373 11.6884 7.79956 11.81C7.6754 11.9317 7.507 12 7.33141 12ZM5.33065 9.08108L6.66935 10.0586V6.81081C6.66935 6.67046 6.71581 6.5339 6.80176 6.42162L10.6762 1.2973H1.32383L5.20089 6.42162C5.28684 6.5339 5.3333 6.67046 5.3333 6.81081L5.33065 9.08108Z"
-                                    fill="#6B7280"
-                                />
-                            </svg> -->
-                            <!-- Column header text -->
-                            <span class="text-gray-700">{{ col.header }}</span>
-                            <!-- Sort icon -->
-                            <div
-                                *ngIf="col.sortable"
-                                class="sort-icon-container cursor-pointer"
-                                [class.active]="sortField === col.field"
-                                [class.hover]="hoveredColumn === col.field"
-                                style="margin-left: 6px"
-                                (click)="sortColumn(col)"
-                                (mouseenter)="onSortIconMouseEnter(col.field)"
-                                (mouseleave)="onSortIconMouseLeave()"
-                            >
-                                <!-- Same sort icon for all states -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                    <path
-                                        d="M9.2015 4.4999C8.9896 4.49986 8.7864 4.42081 8.63658 4.28015L6.00536 1.81036L3.37414 4.28015C3.30043 4.35178 3.21226 4.40892 3.11477 4.44823C3.01729 4.48753 2.91244 4.50822 2.80634 4.50909C2.70025 4.50995 2.59503 4.49098 2.49683 4.45327C2.39864 4.41555 2.30942 4.35986 2.2344 4.28944C2.15937 4.21902 2.10004 4.13528 2.05987 4.04311C2.01969 3.95094 1.99947 3.85217 2.0004 3.75259C2.00132 3.653 2.02336 3.55459 2.06524 3.46308C2.10711 3.37158 2.16799 3.28882 2.2443 3.21963L5.44044 0.219593C5.59028 0.0789877 5.79348 0 6.00536 0C6.21724 0 6.42044 0.0789877 6.57028 0.219593L9.76642 3.21963C9.87813 3.32452 9.95421 3.45815 9.98502 3.60361C10.0158 3.74908 10 3.89986 9.93955 4.03688C9.87909 4.17391 9.7767 4.29104 9.64533 4.37345C9.51396 4.45586 9.35951 4.49987 9.2015 4.4999Z"
-                                        fill="#6B7280"
-                                    />
-                                    <path
-                                        d="M6.00499 12C5.79309 12 5.58989 11.9209 5.44008 11.7802L2.24394 8.78021C2.16762 8.71102 2.10675 8.62826 2.06487 8.53676C2.02299 8.44525 2.00095 8.34684 2.00003 8.24725C1.99911 8.14766 2.01933 8.0489 2.0595 7.95673C2.09968 7.86456 2.15901 7.78082 2.23403 7.7104C2.30906 7.63998 2.39827 7.58428 2.49647 7.54657C2.59467 7.50886 2.69988 7.48989 2.80598 7.49075C2.91207 7.49162 3.01692 7.51231 3.11441 7.55161C3.21189 7.59092 3.30006 7.64806 3.37377 7.71969L6.00499 10.1895L8.63622 7.71969C8.78692 7.58307 8.98876 7.50748 9.19826 7.50918C9.40776 7.51089 9.60817 7.58977 9.75632 7.72883C9.90447 7.86789 9.9885 8.056 9.99032 8.25265C9.99214 8.4493 9.9116 8.63875 9.76605 8.78021L6.56991 11.7802C6.4201 11.9209 6.21689 12 6.00499 12Z"
-                                        fill="#6B7280"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-customer let-rowIndex="rowIndex">
-                <tr>
-                    <td
-                        *ngFor="let col of columns"
-                        [class]="col.frozen ? (col.alignFrozen === 'right' ? 'p-frozen-column p-frozen-column-right' : 'p-frozen-column p-frozen-column-left') : ''"
-                        [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''"
-                    >
-                        <!-- SL Column -->
-                        <ng-container *ngIf="col.field === 'id' && col.header === 'SL'">
-                            <span class="text-gray-600">{{ first + rowIndex + 1 }}</span>
-                        </ng-container>
-                        <!-- ID Column -->
-                        <ng-container *ngIf="col.field === 'id' && col.header !== 'SL'">
-                            <span class="text-gray-900 font-medium">{{ customer.id }}</span>
-                        </ng-container>
-                        <!-- CMR Column: show country name -->
-                        <ng-container *ngIf="col.header === 'CMR'">
-                            <div class="flex items-center gap-2">
-                                <img [alt]="customer.representative.name" src="/demo/images/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
-                                <span class="image-text">{{ customer.representative.name }}</span>
-                            </div>
-                        </ng-container>
-                        <!-- Text columns -->
-                        <ng-container *ngIf="col.type === 'text' || (!col.type && col.field !== 'id')">
-                            <span *ngIf="col.field === 'country.name' && col.header !== 'DESCRIPTION IN BANGLA'">{{ customer.country?.name }}</span>
-                            <span *ngIf="col.field === 'representative.name'">{{ customer.representative?.name }}</span>
-                            <span *ngIf="col.field === 'date'" [innerHTML]="customer.date | date: 'd MMMM y'"></span>
-                            <span
-                                *ngIf="col.field === 'timeTaken'"
-                                [ngClass]="{
-                                    'text-red-500': customer.timeTaken > 20,
-                                    'text-green-500': customer.timeTaken <= 20
-                                }"
-                            >
-                                {{ customer.timeTaken }}
-                            </span>
-                            <input *ngIf="col.field === 'assignUnit'" type="text" pInputText placeholder="" class="input-field" />
-                            <span *ngIf="col.field === 'mediaType'">
-                                <div class="flex gap-2 items-center">
-                                    <button pButton type="button" label="Image" class="p-button-sm p-button-outlined pi pi-image media-button" style="padding: 8px 8px; font-size: 12px"></button>
-                                    <button pButton type="button" label="Video" class="p-button-sm p-button-outlined pi pi-video media-button" style="padding: 8px 8px; font-size: 12px"></button>
+                                <!-- filter icon -->
+
+                                <div *ngIf="col.type === 'chip' || col.type === 'status'" style="position: relative; display: inline-block;">
+                                    <button type="button" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;" (click)="activeFilterCol = col.field">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                            <path
+                                                d="M7.33141 12C7.18816 12 7.04878 11.9545 6.93417 11.8703L4.27135 9.92432C4.18912 9.8639 4.12238 9.78556 4.07642 9.69549C4.03045 9.60542 4.00652 9.5061 4.00652 9.40541V7.02486L0.259893 2.06919C0.114011 1.87612 0.0257058 1.64717 0.00481566 1.40783C-0.0160745 1.16849 0.0312713 0.928172 0.141578 0.713644C0.251884 0.499116 0.420819 0.318806 0.62956 0.192804C0.838302 0.0668009 1.07865 5.42111e-05 1.32383 0H10.6762C10.9213 5.42111e-05 11.1617 0.0668009 11.3704 0.192804C11.5792 0.318806 11.7481 0.499116 11.8584 0.713644C11.9687 0.928172 12.0161 1.16849 11.9952 1.40783C11.9743 1.64717 11.886 1.87612 11.7401 2.06919L7.99348 7.02486V11.3514C7.99348 11.5234 7.92373 11.6884 7.79956 11.81C7.6754 11.9317 7.507 12 7.33141 12ZM5.33065 9.08108L6.66935 10.0586V6.81081C6.66935 6.67046 6.71581 6.5339 6.80176 6.42162L10.6762 1.2973H1.32383L5.20089 6.42162C5.28684 6.5339 5.3333 6.67046 5.3333 6.81081L5.33065 9.08108Z"
+                                                fill="#6B7280"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div *ngIf="activeFilterCol === col.field" class="filter-menu" style="position: absolute; top: 28px; left: 0; z-index: 100; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 2px 8px 0 rgba(99,102,241,0.08); padding: 0; min-width: 280px;">
+                                        <div style="padding: 16px 16px 0 16px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between;">
+                                            <span style="font-weight: 600; font-size: 15px;">Select Item(s)</span>
+                                            <label style="display: flex; align-items: center; cursor: pointer; gap: 4px;">
+                                                <input type="checkbox" [(ngModel)]="selectAllTypes" (change)="onSelectAllTypes()" style="accent-color: #6366f1; width: 16px; height: 16px;" />
+                                                <span style="color: #6366f1; font-size: 14px; font-weight: 500;">Select All</span>
+                                            </label>
+                                        </div>
+                                        <div style="padding: 12px 16px 0 16px; border-bottom: 1px solid #f0f0f0;">
+                                            <input type="text" [(ngModel)]="filterSearch[col.field]" placeholder="Search here" style="width: 100%; padding: 7px 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; margin-bottom: 8px;" />
+                                        </div>
+                                        <div style="max-height: 180px; overflow-y: auto; padding: 0 16px;">
+                                            <div *ngFor="let type of (col.filterOptions || []) | typeFilter:filterSearch[col.field]" style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
+                                                <input type="checkbox" [id]="type.value" [value]="type.value" [(ngModel)]="selectedTypes" (change)="onTypeSelectionChange(type.value, $event)" style="accent-color: #6366f1; width: 16px; height: 16px;" />
+                                                <label [for]="type.value" style="font-size: 14px; cursor: pointer;">{{ type.label }}</label>
+                                            </div>
+                                        </div>
+                                        <div style="padding: 16px; border-top: 1px solid #f0f0f0; display: flex; justify-content: flex-end;">
+                                            <button type="button" (click)="applyTypeFilter()" style="background: #6366f1; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-size: 15px; font-weight: 500; cursor: pointer;">Apply Filters</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </span>
-                            <span
-                                *ngIf="col.field === 'country.name' && col.header === 'DESCRIPTION IN BANGLA'"
-                                pTooltip="পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে  রিপ্লেনিশমেন্টের জন্য অর্ডার করুন"
-                                tooltipPosition="top"
-                                style="display: inline-block; max-width: 18rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
-                            >
-                                পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে রিপ্লেনিশমেন্টের জন্য অর্ডার করুন
-                            </span>
-                        </ng-container>
-                        <!-- Representative column -->
-                        <ng-container *ngIf="col.type === 'representative'">
-                            <div class="flex items-center gap-2">
-                                <img [alt]="customer.representative?.name" src="/demo/images/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
-                                <span class="image-text">{{ customer.representative?.name }}</span>
-                            </div>
-                        </ng-container>
-                        <!-- Chip column -->
-                        <ng-container *ngIf="col.type === 'chip'">
-                            <div class="chip-container">
-                                <ng-container *ngIf="customer.types && customer.types.length > 0; else noTypes">
-                                    <ng-container *ngFor="let type of getVisibleChips(customer.types, 1).visible">
-                                        <p-chip [label]="type" styleClass="text-xs"></p-chip>
-                                    </ng-container>
-                                    <p-chip
-                                        *ngIf="getVisibleChips(customer.types, 1).remaining > 0"
-                                        [label]="getVisibleChips(customer.types, 1).remaining + '+'"
-                                        styleClass="text-xs cursor-pointer chip-count"
-                                        [pTooltip]="getVisibleChips(customer.types, 1).tooltip"
-                                        tooltipPosition="top"
-                                    >
-                                    </p-chip>
-                                </ng-container>
-                                <ng-template #noTypes>
-                                    <p-chip label="No types" styleClass="text-xs chip-secondary"></p-chip>
-                                </ng-template>
-                            </div>
-                        </ng-container>
-                        <!-- Status column -->
-                        <ng-container *ngIf="col.type === 'status'">
-                            <p-tag [value]="customer.status?.toLowerCase()" [severity]="getSeverity(customer.status)" />
-                        </ng-container>
-                        <!-- Activity column -->
-                        <ng-container *ngIf="col.type === 'activity'">
-                            <div class="flex items-center gap-2">
+                                <!-- Column header text -->
+                                <span class="text-gray-700">{{ col.header }}</span>
+                                <!-- Sort icon -->
                                 <div
-                                    class="activity-circle"
-                                    [ngClass]="{
-                                        'active-circle': customer.activityStatus === 'Active',
-                                        'inactive-circle': customer.activityStatus === 'Inactive'
-                                    }"
-                                ></div>
-                                <span>{{ customer.activityStatus || 'Unknown' }}</span>
-                            </div>
-                        </ng-container>
-                        <!-- Image column -->
-                        <ng-container *ngIf="col.type === 'image'">
-                            <img [alt]="'Test Image ' + (first + rowIndex)" [src]="getTestImage(first + rowIndex)" width="48" height="48" style="vertical-align: middle" />
-                        </ng-container>
-                        <!-- Dropdown column -->
-                        <ng-container *ngIf="col.type === 'dropdown'">
-                            <div style="position: relative; display: inline-block; width: 150px">
-                                <select
-                                    [(ngModel)]="customer.dropdownValue"
-                                    class="input-field"
-                                    style="
-                                        width: 100%;
-                                        padding: 8px 32px 8px 12px;
-                                        border-radius: 6px;
-                                        border: 1px solid #d1d5db;
-                                        font-size: 15px;
-                                        background: #fff;
-                                        color: #374151;
-                                        appearance: none;
-                                        transition:
-                                            border-color 0.2s,
-                                            box-shadow 0.2s;
-                                        outline: none;
-                                    "
-                                    onfocus="this.style.borderColor='#6366f1';"
-                                    onblur="this.style.borderColor='#d1d5db';this.style.boxShadow='';"
-                                    onmouseover="this.style.borderColor='#6366f1';"
-                                    onmouseout="this.style.borderColor=this === document.activeElement ? '#6366f1' : '#d1d5db';"
+                                    *ngIf="col.sortable"
+                                    class="sort-icon-container cursor-pointer"
+                                    [class.active]="sortField === col.field"
+                                    [class.hover]="hoveredColumn === col.field"
+                                    style="margin-left: 6px"
+                                    (click)="sortColumn(col)"
+                                    (mouseenter)="onSortIconMouseEnter(col.field)"
+                                    (mouseleave)="onSortIconMouseLeave()"
                                 >
-                                    <option *ngFor="let option of col.dropdownOptions || dropdownOptions" [ngValue]="option.value" [ngStyle]="{ background: '#e0f2fe', color: '#2563eb' }">{{ option.label }}</option>
-                                </select>
-                                <span style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); pointer-events: none">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                                </span>
+                                    <!-- Same sort icon for all states -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                        <path
+                                            d="M9.2015 4.4999C8.9896 4.49986 8.7864 4.42081 8.63658 4.28015L6.00536 1.81036L3.37414 4.28015C3.30043 4.35178 3.21226 4.40892 3.11477 4.44823C3.01729 4.48753 2.91244 4.50822 2.80634 4.50909C2.70025 4.50995 2.59503 4.49098 2.49683 4.45327C2.39864 4.41555 2.30942 4.35986 2.2344 4.28944C2.15937 4.21902 2.10004 4.13528 2.05987 4.04311C2.01969 3.95094 1.99947 3.85217 2.0004 3.75259C2.00132 3.653 2.02336 3.55459 2.06524 3.46308C2.10711 3.37158 2.16799 3.28882 2.2443 3.21963L5.44044 0.219593C5.59028 0.0789877 5.79348 0 6.00536 0C6.21724 0 6.42044 0.0789877 6.57028 0.219593L9.76642 3.21963C9.87813 3.32452 9.95421 3.45815 9.98502 3.60361C10.0158 3.74908 10 3.89986 9.93955 4.03688C9.87909 4.17391 9.7767 4.29104 9.64533 4.37345C9.51396 4.45586 9.35951 4.49987 9.2015 4.4999Z"
+                                            fill="#6B7280"
+                                        />
+                                        <path
+                                            d="M6.00499 12C5.79309 12 5.58989 11.9209 5.44008 11.7802L2.24394 8.78021C2.16762 8.71102 2.10675 8.62826 2.06487 8.53676C2.02299 8.44525 2.00095 8.34684 2.00003 8.24725C1.99911 8.14766 2.01933 8.0489 2.0595 7.95673C2.09968 7.86456 2.15901 7.78082 2.23403 7.7104C2.30906 7.63998 2.39827 7.58428 2.49647 7.54657C2.59467 7.50886 2.69988 7.48989 2.80598 7.49075C2.91207 7.49162 3.01692 7.51231 3.11441 7.55161C3.21189 7.59092 3.30006 7.64806 3.37377 7.71969L6.00499 10.1895L8.63622 7.71969C8.78692 7.58307 8.98876 7.50748 9.19826 7.50918C9.40776 7.51089 9.60817 7.58977 9.75632 7.72883C9.90447 7.86789 9.9885 8.056 9.99032 8.25265C9.99214 8.4493 9.9116 8.63875 9.76605 8.78021L6.56991 11.7802C6.4201 11.9209 6.21689 12 6.00499 12Z"
+                                            fill="#6B7280"
+                                        />
+                                    </svg>
+                                </div>
                             </div>
-                        </ng-container>
-                        <!-- Action column -->
-                        <ng-container *ngIf="col.type === 'action'">
-                            <ng-container *ngIf="!col.frozen">
-                                <div class="flex gap-3">
-                                    <button pButton type="button" class="p-button-text p-button-plain action-pencil" (click)="sendDataToParent(customer)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17M16 5L19 8M20.385 6.58511C20.7788 6.19126 21.0001 5.65709 21.0001 5.10011C21.0001 4.54312 20.7788 4.00895 20.385 3.61511C19.9912 3.22126 19.457 3 18.9 3C18.343 3 17.8088 3.22126 17.415 3.61511L9 12.0001V15.0001H12L20.385 6.58511Z"
-                                                stroke="#6875F5"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            />
-                                        </svg>
-                                    </button>
-                                    <button pButton type="button" class="p-button-text p-button-plain action-trash" (click)="deleteCustomer(customer)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M4 7H20M10 11V17M14 11V17M5 7L6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19L19 7M9 7V4C9 3.73478 9.10536 3.48043 9.29289 3.29289C9.48043 3.10536 9.73478 3 10 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4V7"
-                                                stroke="#F05252"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            />
-                                        </svg>
-                                    </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-customer let-rowIndex="rowIndex">
+                    <tr>
+                        <td
+                            *ngFor="let col of columns"
+                            [class]="col.frozen ? (col.alignFrozen === 'right' ? 'p-frozen-column p-frozen-column-right' : 'p-frozen-column p-frozen-column-left') : ''"
+                            [ngClass]="col.frozen && balanceFrozen ? 'font-bold' : ''"
+                        >
+                            <!-- SL Column -->
+                            <ng-container *ngIf="col.field === 'sl' && col.header === 'SL'">
+                                <span class="text-gray-600">{{ first + rowIndex + 1 }}</span>
+                            </ng-container>
+                            <!-- ID Column -->
+                            <ng-container *ngIf="col.field === 'id' && col.header !== 'SL'">
+                                <span class="text-gray-900 font-medium">{{ customer.id }}</span>
+                            </ng-container>
+                            <span
+                                    *ngIf="col.field === 'english.description' && col.header === 'DESCRIPTION IN ENGLISH'"
+                                    pTooltip="Sufficient POSM has been executed, no replenishment is needed, if needed, please order for replenishment"
+                                    tooltipPosition="top"
+                                    style="display: inline-block; max-width: 18rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+                                >
+                                    Sufficient POSM has been executed, no replenishment is needed, if needed, please order for replenishment
+                                </span>
+                            <!-- CMR Column: show country name -->
+                            <ng-container *ngIf="col.header === 'CMR'">
+                                <div class="flex items-center gap-2">
+                                    <img [alt]="customer.representative.name" src="/demo/images/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                                    <span class="image-text">{{ customer.representative.name }}</span>
                                 </div>
                             </ng-container>
-                            <ng-container *ngIf="col.frozen">
-                                <span class="flex justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 24 24" fill="rgba(6,148,162,1)">
-                                        <path
-                                            d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"
-                                        ></path>
-                                    </svg>
+                            <!-- Text columns -->
+                            <ng-container *ngIf="col.type === 'text' || (!col.type && col.field !== 'id')">
+                                <span *ngIf="col.field === 'bangla.description' && col.header !== 'DESCRIPTION IN BANGLA'">{{ customer.country?.name }}</span>
+                                <span *ngIf="col.field === 'representative.name'">{{ customer.representative?.name }}</span>
+                                <span *ngIf="col.field === 'date'" [innerHTML]="customer.date | date: 'd MMMM y'"></span>
+                                <span
+                                    *ngIf="col.field === 'timeTaken'"
+                                    [ngClass]="{
+                                        'text-red-500': customer.timeTaken > 20,
+                                        'text-green-500': customer.timeTaken <= 20
+                                    }"
+                                >
+                                    {{ customer.timeTaken }}
+                                </span>
+                                <input *ngIf="col.field === 'assignUnit'" type="text" pInputText placeholder="" class="input-field" />
+                                <span *ngIf="col.field === 'mediaType'">
+                                    <div class="flex gap-2 items-center">
+                                        <button pButton type="button" label="Image" class="p-button-sm p-button-outlined pi pi-image media-button" style="padding: 8px 8px; font-size: 12px"></button>
+                                        <button pButton type="button" label="Video" class="p-button-sm p-button-outlined pi pi-video media-button" style="padding: 8px 8px; font-size: 12px"></button>
+                                    </div>
+                                </span>
+                                <span
+                                    *ngIf="col.field === 'bangla.description' && col.header === 'DESCRIPTION IN BANGLA'"
+                                    pTooltip="পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে  রিপ্লেনিশমেন্টের জন্য অর্ডার করুন"
+                                    tooltipPosition="top"
+                                    style="display: inline-block; max-width: 18rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+                                >
+                                    পর্যাপ্ত পিওএসএম এক্সেকিউট করা আছে, রিপ্লেনিশমেন্টের প্রয়োজন নেই, যদি প্রয়োজন হয় তবে রিপ্লেনিশমেন্টের জন্য অর্ডার করুন
                                 </span>
                             </ng-container>
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template>
+                            <!-- Representative column -->
+                            <ng-container *ngIf="col.type === 'representative'">
+                                <div class="flex items-center gap-2">
+                                    <img [alt]="customer.representative?.name" src="/demo/images/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
+                                    <span class="image-text">{{ customer.representative?.name }}</span>
+                                </div>
+                            </ng-container>
+                            <!-- Chip column -->
+                            <ng-container *ngIf="col.type === 'chip'">
+                                <div class="chip-container">
+                                    <ng-container *ngIf="customer.types && customer.types.length > 0; else noTypes">
+                                        <ng-container *ngFor="let type of getVisibleChips(customer.types, 1).visible">
+                                            <p-chip [label]="type" styleClass="text-xs"></p-chip>
+                                        </ng-container>
+                                        <p-chip
+                                            *ngIf="getVisibleChips(customer.types, 1).remaining > 0"
+                                            [label]="getVisibleChips(customer.types, 1).remaining + '+'"
+                                            styleClass="text-xs cursor-pointer chip-count"
+                                            [pTooltip]="getVisibleChips(customer.types, 1).tooltip"
+                                            tooltipPosition="top"
+                                        >
+                                        </p-chip>
+                                    </ng-container>
+                                    <ng-template #noTypes>
+                                        <p-chip label="No types" styleClass="text-xs chip-secondary"></p-chip>
+                                    </ng-template>
+                                </div>
+                            </ng-container>
+                            <!-- Status column -->
+                            <ng-container *ngIf="col.type === 'status'">
+                                <p-tag [value]="customer.status?.toLowerCase()" [severity]="getSeverity(customer.status)" />
+                            </ng-container>
+                            <!-- Activity column -->
+                            <ng-container *ngIf="col.type === 'activity'">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="activity-circle"
+                                        [ngClass]="{
+                                            'active-circle': customer.activityStatus === 'Active',
+                                            'inactive-circle': customer.activityStatus === 'Inactive'
+                                        }"
+                                    ></div>
+                                    <span>{{ customer.activityStatus || 'Unknown' }}</span>
+                                </div>
+                            </ng-container>
+                            <!-- Image column -->
+                            <ng-container *ngIf="col.type === 'image'">
+                                <img [alt]="'Test Image ' + (first + rowIndex)" [src]="getTestImage(first + rowIndex)" width="48" height="48" style="vertical-align: middle" />
+                            </ng-container>
+                            <!-- Dropdown column -->
+                            <ng-container *ngIf="col.type === 'dropdown'">
+                                <div style="position: relative; display: inline-block; width: 200px">
+                                    <select
+                                        [(ngModel)]="customer.dropdownValue"
+                                        class="input-field"
+                                        style="
+                                            width: 100%;
+                                            padding: 8px 32px 8px 12px;
+                                            border-radius: 6px;
+                                            border: 1px solid #d1d5db;
+                                            font-size: 15px;
+                                            background: #fff;
+                                            color: #374151;
+                                            appearance: none;
+                                            transition:
+                                                border-color 0.2s,
+                                                box-shadow 0.2s;
+                                            outline: none;
+                                        "
+                                        onfocus="this.style.borderColor='#6366f1';"
+                                        onblur="this.style.borderColor='#d1d5db';this.style.boxShadow='';"
+                                        onmouseover="this.style.borderColor='#6366f1';"
+                                        onmouseout="this.style.borderColor=this === document.activeElement ? '#6366f1' : '#d1d5db';"
+                                    >
+                                        <option *ngFor="let option of col.dropdownOptions || dropdownOptions" [ngValue]="option.value" [ngStyle]="{ background: '#e0f2fe', color: '#2563eb' }">{{ option.label }}</option>
+                                    </select>
+                                    <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); pointer-events: none">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                    </span>
+                                </div>
+                            </ng-container>
+                            <!-- Action column -->
+                            <ng-container *ngIf="col.type === 'action'">
+                                <ng-container *ngIf="!col.frozen">
+                                    <div class="flex gap-3">
+                                        <button pButton type="button" class="p-button-text p-button-plain action-pencil" (click)="sendDataToParent(customer)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17M16 5L19 8M20.385 6.58511C20.7788 6.19126 21.0001 5.65709 21.0001 5.10011C21.0001 4.54312 20.7788 4.00895 20.385 3.61511C19.9912 3.22126 19.457 3 18.9 3C18.343 3 17.8088 3.22126 17.415 3.61511L9 12.0001V15.0001H12L20.385 6.58511Z"
+                                                    stroke="#6875F5"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </button>
+                                        <button pButton type="button" class="p-button-text p-button-plain action-trash" (click)="deleteCustomer(customer)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M4 7H20M10 11V17M14 11V17M5 7L6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19L19 7M9 7V4C9 3.73478 9.10536 3.48043 9.29289 3.29289C9.48043 3.10536 9.73478 3 10 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4V7"
+                                                    stroke="#F05252"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="col.frozen">
+                                    <span class="flex justify-center items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 24 24" fill="rgba(6,148,162,1)">
+                                            <path
+                                                d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"
+                                            ></path>
+                                        </svg>
+                                    </span>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-template>
             </p-table>
         </div>
         <!-- Custom Pagination -->
-    <div class="flex items-center custom-pagination w-full">
+        <div class="flex items-center custom-pagination w-full">
             <!-- Left side: Rows per page -->
             <div class="flex items-center w-full gap-2.5">
                 <span class="text-sm text-gray-500 mr-2">Rows per page </span>
@@ -411,5 +512,3 @@
 </p-dialog>
 
 <p-confirmDialog></p-confirmDialog>
-
-

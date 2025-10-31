@@ -1,3 +1,4 @@
+// Removed stray applyTypeFilter definition outside the class
 import {Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {InputTextModule} from 'primeng/inputtext';
@@ -24,6 +25,7 @@ import {Product, ProductService} from '@/pages/service/product.service';
 import { Paginator, PaginatorModule } from "primeng/paginator";
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
+import { TypeFilterPipe } from './type-filter.pipe';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -65,13 +67,17 @@ interface ColumnConfig {
     IconFieldModule,
     PaginatorModule,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
+    TypeFilterPipe
 ],
     templateUrl: './tabledemo.component.html',
     styleUrls: ['./tabledemo.component.css'],
     providers: [ConfirmationService, MessageService, CustomerService, ProductService]
 })
 export class TableDemo implements OnInit {
+    // For filter menu state and search input
+    activeFilterCol: string | null = null;
+    filterSearch: { [key: string]: string } = {};
     customers1: Customer[] = [];
 
     customers2: Customer[] = [];
@@ -126,6 +132,10 @@ export class TableDemo implements OnInit {
     editDialogVisible: boolean = false;
     editingCustomer: any = null;
 
+    // Search bar properties
+    showSearchBar: boolean = false;
+    searchValue: string = '';
+
     @ViewChild('filter') filter!: ElementRef;
 
     @Input() columns: ColumnConfig[] = [];
@@ -147,6 +157,9 @@ export class TableDemo implements OnInit {
     ) {}
 
     ngOnInit() {
+    // By default, mark all checkboxes in the filter menu
+    this.selectedTypes = this.types.map(type => type.value);
+    this.selectAllTypes = true;
         this.customerService.getCustomersLarge().then((customers) => {
             this.customers1 = customers;
             this.loading = false;
@@ -223,11 +236,11 @@ export class TableDemo implements OnInit {
         // Set default columns if none provided
         if (this.columns.length === 0) {
             this.columns = [
-                { field: 'id', header: 'SL', sortable: true, width: '80px', frozen: true },
+                { field: 'sl', header: 'SL', sortable: true, width: '80px', frozen: true },
                 { field: 'id', header: 'ID', sortable: true, width: '150px' },
-                { field: 'country.name', header: 'DESCRIPTION IN ENGLISH', sortable: true, width: '250px' },
+                { field: 'english.description', header: 'DESCRIPTION IN ENGLISH', sortable: true, width: '250px' },
                 { field: 'representative', header: 'CMR', filterable: true, sortable: true, width: '14rem', filterOptions: this.representatives },
-                { field: 'country.name', header: 'DESCRIPTION IN BANGLA', sortable: true, width: '250px' },
+                { field: 'bangla.description', header: 'DESCRIPTION IN BANGLA', sortable: true, width: '250px' },
                 { field: 'types', header: 'TYPE', filterable: true, sortable: true, width: '260px', type: 'chip', filterOptions: this.types },
                 { field: 'status', header: 'STATUS', sortable: true, filterable: true, width: '150px', type: 'status', filterOptions: this.statuses },
                 { field: 'activityStatus', header: 'ACTIVITY', sortable: true, width: '200px', type: 'activity' },
@@ -239,7 +252,7 @@ export class TableDemo implements OnInit {
                 { field: 'assignUnit', header: 'ASSIGN UNIT TO', sortable: true, width: '85px' },
                 { field: 'dropdownValue', header: 'DROPDOWN', sortable: true, width: '85px', type: 'dropdown', dropdownOptions: this.dropdownOptions },
                 { field: 'actions', header: 'ACTION', width: '85px', type: 'action' },
-                { field: 'actions', header: 'ACTION', width: '85px', type: 'action', frozen: true, alignFrozen: 'right' }
+                { field: 'action', header: 'ACTION', width: '85px', type: 'action', frozen: true, alignFrozen: 'right' }
             ];
         }
 
@@ -367,6 +380,11 @@ export class TableDemo implements OnInit {
         } else {
             this.selectedTypes = [];
         }
+    }
+
+    applyTypeFilter() {
+        // You can add your actual filtering logic here if needed
+        this.activeFilterCol = null;
     }
 
     onTypeSelectionChange(typeValue: string, event: any) {
