@@ -157,9 +157,9 @@ export class TableDemo implements OnInit {
     ) {}
 
     ngOnInit() {
-    // By default, mark all checkboxes in the filter menu
-    this.selectedTypes = this.types.map(type => type.value);
-    this.selectAllTypes = true;
+        // By default, uncheck all checkboxes in the filter menu
+        this.selectedTypes = [];
+        this.selectAllTypes = false;
         this.customerService.getCustomersLarge().then((customers) => {
             this.customers1 = customers;
             this.loading = false;
@@ -383,21 +383,32 @@ export class TableDemo implements OnInit {
     }
 
     applyTypeFilter() {
-        // You can add your actual filtering logic here if needed
+        // Filter data by selectedTypes (show only rows where customer.types contains any selected type)
+        if (this.selectedTypes.length > 0) {
+            this.data = this.customers2.filter(customer =>
+                Array.isArray(customer.types) && customer.types.some(type => this.selectedTypes.includes(type))
+            );
+        } else {
+            // If no types selected, show all
+            this.data = [...this.customers2];
+        }
+        this.totalRecords = this.data.length;
+        this.first = 0; // Reset to first page
         this.activeFilterCol = null;
     }
 
     onTypeSelectionChange(typeValue: string, event: any) {
         if (event.target.checked) {
+            // Add only the clicked value
             if (!this.selectedTypes.includes(typeValue)) {
-                this.selectedTypes.push(typeValue);
+                this.selectedTypes = [...this.selectedTypes, typeValue];
             }
         } else {
+            // Remove only the unchecked value
             this.selectedTypes = this.selectedTypes.filter(value => value !== typeValue);
         }
-        
-        // Update Select All checkbox state
-        this.selectAllTypes = this.selectedTypes.length === this.types.length;
+        // Only set selectAllTypes to true if all are selected, otherwise false
+        this.selectAllTypes = this.selectedTypes.length === this.types.length && this.types.length > 0;
     }
 
     getVisibleChips(types: string[], maxVisible: number = 2): { visible: string[], remaining: number, tooltip: string } {

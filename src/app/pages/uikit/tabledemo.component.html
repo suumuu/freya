@@ -202,25 +202,48 @@
                                             />
                                         </svg>
                                     </button>
-                                    <div *ngIf="activeFilterCol === col.field" class="filter-menu" style="position: absolute; top: 28px; left: 0; z-index: 100; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 2px 8px 0 rgba(99,102,241,0.08); padding: 0; min-width: 280px;">
-                                        <div style="padding: 16px 16px 0 16px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between;">
-                                            <span style="font-weight: 600; font-size: 15px;">Select Item(s)</span>
-                                            <label style="display: flex; align-items: center; cursor: pointer; gap: 4px;">
-                                                <input type="checkbox" [(ngModel)]="selectAllTypes" (change)="onSelectAllTypes()" style="accent-color: #6366f1; width: 16px; height: 16px;" />
-                                                <span style="color: #6366f1; font-size: 14px; font-weight: 500;">Select All</span>
-                                            </label>
-                                        </div>
-                                        <div style="padding: 12px 16px 0 16px; border-bottom: 1px solid #f0f0f0;">
-                                            <input type="text" [(ngModel)]="filterSearch[col.field]" placeholder="Search here" style="width: 100%; padding: 7px 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; margin-bottom: 8px;" />
-                                        </div>
-                                        <div style="max-height: 180px; overflow-y: auto; padding: 0 16px;">
-                                            <div *ngFor="let type of (col.filterOptions || []) | typeFilter:filterSearch[col.field]" style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
-                                                <input type="checkbox" [id]="type.value" [value]="type.value" [(ngModel)]="selectedTypes" (change)="onTypeSelectionChange(type.value, $event)" style="accent-color: #6366f1; width: 16px; height: 16px;" />
-                                                <label [for]="type.value" style="font-size: 14px; cursor: pointer;">{{ type.label }}</label>
+                                    <div *ngIf="activeFilterCol === col.field" class="filter-menu custom-filter-menu">
+                                        <div class="filter-menu-header">
+                                            <div class="filter-menu-header-row">
+                                                <span class="filter-menu-title text-gray-900">Select Item(s)</span>
+                                                <label class="filter-menu-selectall">
+                                                    <input type="checkbox" [(ngModel)]="selectAllTypes" (change)="onSelectAllTypes()" class="filter-checkbox" />
+                                                    <span class="filter-menu-selectall-label text-gray-600 text-sm font-medium">Select All</span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-menu-search-input" style="display: flex; align-items: center; background: #fafbff; border: 2px solid #E5E7EB; border-radius: 8px; height: 36px; width: 100%; padding: 4px 10px; gap: 8px; margin-top: 8px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <g clip-path="url(#clip0_35_35879)">
+                                                        <path d="M6.40008 12.8C5.13426 12.8 3.89687 12.4246 2.84439 11.7214C1.7919 11.0182 0.971586 10.0186 0.48718 8.84917C0.00277303 7.67973 -0.12397 6.3929 0.122979 5.15142C0.369927 3.90994 0.979475 2.76957 1.87454 1.87452C2.76961 0.979463 3.90999 0.369922 5.15148 0.122977C6.39298 -0.123968 7.67982 0.002773 8.84928 0.487174C10.0187 0.971574 11.0183 1.79188 11.7215 2.84435C12.4248 3.89683 12.8002 5.1342 12.8002 6.4C12.7982 8.0968 12.1233 9.72356 10.9235 10.9234C9.72367 12.1232 8.0969 12.7981 6.40008 12.8ZM6.40008 1.6C5.45072 1.6 4.52267 1.88152 3.73331 2.40895C2.94394 2.93638 2.32871 3.68604 1.9654 4.56312C1.6021 5.4402 1.50704 6.40532 1.69225 7.33643C1.87746 8.26754 2.33463 9.12282 3.00593 9.79411C3.67723 10.4654 4.53251 10.9226 5.46363 11.1078C6.39475 11.293 7.35988 11.1979 8.23698 10.8346C9.11407 10.4713 9.86374 9.85609 10.3912 9.06674C10.9186 8.27738 11.2001 7.34935 11.2001 6.4C11.1989 5.12735 10.6927 3.90719 9.79283 3.00729C8.89292 2.10739 7.67274 1.60127 6.40008 1.6Z" fill="#6B7280"/>
+                                                        <path d="M15.2002 16C14.988 16 14.7846 15.9156 14.6346 15.7656L11.4345 12.5656C11.2888 12.4147 11.2082 12.2126 11.21 12.0029C11.2118 11.7931 11.2959 11.5925 11.4443 11.4441C11.5926 11.2958 11.7932 11.2117 12.003 11.2099C12.2128 11.208 12.4148 11.2887 12.5657 11.4344L15.7658 14.6344C15.8776 14.7463 15.9538 14.8888 15.9846 15.044C16.0155 15.1991 15.9996 15.36 15.9391 15.5061C15.8786 15.6523 15.7761 15.7772 15.6445 15.8651C15.513 15.953 15.3584 16 15.2002 16Z" fill="#6B7280"/>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_35_35879">
+                                                            <rect width="16" height="16" fill="white"/>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <input type="text" [(ngModel)]="filterSearch[col.field]" placeholder="Search here" style="border: none; outline: none; background: transparent; font-size: 15px; color: #374151; flex: 1; height: 28px;" />
+                                                <svg (click)="filterSearch[col.field] = ''" class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <g clip-path="url(#clip0_40000317_7043)">
+                                                        <path d="M9.45185 7.99999L14.8865 2.5653C14.9846 2.47058 15.0628 2.35728 15.1166 2.23201C15.1705 2.10674 15.1988 1.97201 15.2 1.83568C15.2011 1.69935 15.1752 1.56414 15.1235 1.43795C15.0719 1.31177 14.9957 1.19713 14.8993 1.10072C14.8029 1.00432 14.6882 0.928074 14.562 0.876447C14.4358 0.824821 14.3006 0.798842 14.1643 0.800027C14.028 0.801211 13.8932 0.829536 13.768 0.883348C13.6427 0.93716 13.5294 1.01538 13.4347 1.11345L8 6.54814L2.56531 1.11345C2.37166 0.926414 2.1123 0.822921 1.84308 0.825261C1.57387 0.8276 1.31634 0.935585 1.12597 1.12596C0.9356 1.31633 0.827615 1.57385 0.825276 1.84307C0.822936 2.11228 0.926429 2.37165 1.11346 2.5653L6.54815 7.99999L1.11346 13.4347C1.0154 13.5294 0.937175 13.6427 0.883363 13.768C0.829551 13.8932 0.801227 14.028 0.800042 14.1643C0.798857 14.3006 0.824836 14.4358 0.876463 14.562C0.92809 14.6882 1.00433 14.8028 1.10074 14.8993C1.19714 14.9957 1.31178 15.0719 1.43797 15.1235C1.56416 15.1752 1.69936 15.2011 1.83569 15.1999C1.97203 15.1988 2.10676 15.1704 2.23203 15.1166C2.3573 15.0628 2.4706 14.9846 2.56531 14.8865L8 9.45184L13.4347 14.8865C13.6283 15.0736 13.8877 15.1771 14.1569 15.1747C14.4261 15.1724 14.6837 15.0644 14.874 14.874C15.0644 14.6836 15.1724 14.4261 15.1747 14.1569C15.1771 13.8877 15.0736 13.6283 14.8865 13.4347L9.45185 7.99999Z" fill="#6B7280"/>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_40000317_7043">
+                                                            <rect width="16" height="16" fill="white"/>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
                                             </div>
                                         </div>
-                                        <div style="padding: 16px; border-top: 1px solid #f0f0f0; display: flex; justify-content: flex-end;">
-                                            <button type="button" (click)="applyTypeFilter()" style="background: #6366f1; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-size: 15px; font-weight: 500; cursor: pointer;">Apply Filters</button>
+                                        <div class="filter-menu-list">
+                                            <div *ngFor="let type of (col.filterOptions || []) | typeFilter:filterSearch[col.field]" class="filter-menu-list-item">
+                                                <input type="checkbox" [id]="type.value" [value]="type.value" [checked]="selectedTypes.includes(type.value)" (change)="onTypeSelectionChange(type.value, $event)" class="filter-checkbox" />
+                                                <label [for]="type.value" class="filter-menu-list-label">{{ type.label }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="filter-menu-footer">
+                                            <button type="button" (click)="applyTypeFilter()" class="filter-menu-apply-btn">Apply Filters</button>
                                         </div>
                                     </div>
                                 </div>
