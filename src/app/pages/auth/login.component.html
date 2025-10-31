@@ -1,37 +1,71 @@
 <div class="login-bg">
-  <div class="login-card">
-    <img src="assets/logo.svg" alt="Logo" class="login-logo" />
-    <div class="login-title">Welcome! Guest</div>
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
-      <div class="login-field-group">
-        <label for="email" class="login-label">Email address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          class="login-input"
-          [(ngModel)]="email"
-          required
-          email
-          [ngClass]="{ 'login-input-error': submitted && !loginForm.controls.email?.valid }"
-        />
-        <div *ngIf="submitted && loginForm.controls.email?.invalid" class="login-error">Email is required</div>
-      </div>
-      <div class="login-field-group">
-        <label for="password" class="login-label">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          class="login-input"
-          [(ngModel)]="password"
-          required
-          minlength="6"
-          [ngClass]="{ 'login-input-error': submitted && !loginForm.controls.password?.valid }"
-        />
-        <div *ngIf="submitted && loginForm.controls.password?.invalid" class="login-error">Password is required</div>
-      </div>
-      <button type="submit" class="login-btn">Log In</button>
-    </form>
-  </div>
+    <div class="login-card">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="384" height="32" viewBox="0 0 384 32" fill="none">
+                <g clip-path="url(#clip0_28_37668)">
+                    <path
+                        d="M172.91 31.6404H176.979L167.903 8.40825H162.513L153.473 31.6404H157.367L159.758 25.572H170.52L172.91 31.6404ZM161.068 22.2433L163.487 16.1056L165.016 11.8062H165.295L166.79 16.1056L169.208 22.2433H161.068H161.068Z"
+                        fill="#111928"
+                    />
+                    <path d="M208.784 31.6404H205.063V8.40825H208.784V31.6404Z" fill="#111928" />
+                    <path
+                        d="M221.893 31.9876C219.69 31.9876 217.876 31.6693 216.451 31.0342C215.026 30.3984 213.97 29.5085 213.286 28.3637C212.602 27.2198 212.26 25.8969 212.26 24.3934V23.8384H215.946V24.2202C215.946 25.1687 216.114 25.9662 216.451 26.6128C216.786 27.2602 217.395 27.746 218.276 28.0685C219.157 28.3926 220.42 28.5542 222.066 28.5542C223.804 28.5542 225.016 28.3068 225.701 27.8087C226.384 27.3113 226.727 26.5311 226.727 25.468C226.727 24.7513 226.622 24.1674 226.413 23.7171C226.205 23.266 225.793 22.9023 225.179 22.6252C224.563 22.348 223.654 22.094 222.449 21.8623L218.484 21.0647C217.14 20.8107 216.015 20.4116 215.112 19.868C214.207 19.3254 213.518 18.626 213.042 17.7707C212.567 16.9155 212.328 15.887 212.328 14.6845C212.328 13.4821 212.635 12.4478 213.251 11.4425C213.864 10.4371 214.815 9.62227 216.102 8.99794C217.388 8.37361 219.028 8.06186 221.023 8.06186C223.156 8.06186 224.888 8.42062 226.222 9.1365C227.554 9.8532 228.528 10.7951 229.143 11.9629C229.757 13.1307 230.064 14.4074 230.064 15.7946V16.2103H226.343V15.8285C226.343 14.8577 226.187 14.0544 225.874 13.4186C225.56 12.7827 225.004 12.2977 224.204 11.9629C223.405 11.628 222.32 11.4598 220.953 11.4598C219.215 11.4598 217.967 11.7146 217.215 12.2227C216.461 12.7316 216.085 13.4829 216.085 14.4767C216.085 15.1934 216.207 15.76 216.45 16.1757C216.693 16.5913 217.116 16.9212 217.719 17.1637C218.322 17.4062 219.156 17.6553 220.223 17.9093L224.187 18.7414C225.647 19.0417 226.842 19.487 227.768 20.0767C228.695 20.6664 229.38 21.3938 229.82 22.2614C230.26 23.1283 230.48 24.1509 230.48 25.3303C230.48 26.5097 230.178 27.6421 229.577 28.659C228.973 29.6767 228.041 30.4858 226.777 31.0862C225.514 31.6874 223.885 31.9885 221.891 31.9885L221.893 31.9876Z"
+                        fill="#111928"
+                    />
+                    <path d="M194.427 19.8078L207.802 0.0148372L201.17 -0.0239258L190.547 15.9381C190.547 18.0759 192.285 19.8087 194.428 19.8087L194.427 19.8078Z" fill="url(#paint0_linear_28_37668)" />
+                    <path d="M190.546 15.9381L184.902 8.38268H178.453L186.665 19.8054C188.808 19.8054 190.546 18.0759 190.546 15.9381Z" fill="url(#paint1_linear_28_37668)" />
+                    <path d="M186.665 19.8078L178.834 31.5951L185.393 31.6404L190.544 23.6808C190.544 21.5431 188.809 19.8078 186.665 19.8078Z" fill="url(#paint2_linear_28_37668)" />
+                    <path d="M190.544 23.6808L196.259 31.6404H202.753L194.427 19.8111C192.284 19.8111 190.544 21.5439 190.544 23.6816V23.6808Z" fill="url(#paint3_linear_28_37668)" />
+                </g>
+                <defs>
+                    <linearGradient id="paint0_linear_28_37668" x1="173.349" y1="9.89195" x2="207.801" y2="9.89195" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFAE00" />
+                        <stop offset="0.12" stop-color="#FF9415" />
+                        <stop offset="0.42" stop-color="#FF5549" />
+                        <stop offset="0.69" stop-color="#FF266E" />
+                        <stop offset="0.88" stop-color="#FF0A86" />
+                        <stop offset="1" stop-color="#FF008F" />
+                    </linearGradient>
+                    <linearGradient id="paint1_linear_28_37668" x1="178.453" y1="14.0932" x2="202.68" y2="14.0932" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#36D9FF" />
+                        <stop offset="1" stop-color="#680EE6" />
+                    </linearGradient>
+                    <linearGradient id="paint2_linear_28_37668" x1="178.834" y1="25.7237" x2="202.302" y2="25.7237" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFAE00" />
+                        <stop offset="0.12" stop-color="#FF9415" />
+                        <stop offset="0.42" stop-color="#FF5549" />
+                        <stop offset="0.69" stop-color="#FF266E" />
+                        <stop offset="0.88" stop-color="#FF0A86" />
+                        <stop offset="1" stop-color="#FF008F" />
+                    </linearGradient>
+                    <linearGradient id="paint3_linear_28_37668" x1="178.375" y1="25.7254" x2="202.757" y2="25.7254" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#36D9FF" />
+                        <stop offset="0.1" stop-color="#37D1FE" />
+                        <stop offset="0.25" stop-color="#3CBDFB" />
+                        <stop offset="0.44" stop-color="#449CF7" />
+                        <stop offset="0.64" stop-color="#506EF1" />
+                        <stop offset="0.87" stop-color="#5E34EA" />
+                        <stop offset="1" stop-color="#680EE6" />
+                    </linearGradient>
+                    <clipPath id="clip0_28_37668">
+                        <rect width="77" height="32" fill="white" transform="translate(153.5)" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+        <div class="login-title">Welcome back</div>
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+            <div class="login-field-group">
+                <label for="email" class="login-label">Phone Number</label>
+                <input id="email" name="email" type="email" class="login-input" [(ngModel)]="email" required email [ngClass]="{ 'login-input-error': submitted && !loginForm.controls['email']?.valid }" />
+                <div *ngIf="submitted && loginForm.controls['email']?.invalid" class="login-error">Email is required</div>
+            </div>
+            <div class="login-field-group">
+                <label for="password" class="login-label">Password</label>
+                <input id="password" name="password" type="password" class="login-input" [(ngModel)]="password" required minlength="6" [ngClass]="{ 'login-input-error': submitted && !loginForm.controls['password']?.valid }" />
+                <div *ngIf="submitted && loginForm.controls['password']?.invalid" class="login-error">Password is required</div>
+            </div>
+            <button type="submit" class="login-btn">Log In</button>
+        </form>
+    </div>
 </div>
