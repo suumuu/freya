@@ -177,7 +177,10 @@
                         </ng-container>
                         <!-- CMR Column: show country name -->
                         <ng-container *ngIf="col.header === 'CMR'">
-                            <span class="text-gray-600">{{ customer.country?.name }}</span>
+                            <div class="flex items-center gap-2">
+                                <img [alt]="customer.representative.name" src="/demo/images/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                                <span class="image-text">{{ customer.representative.name }}</span>
+                            </div>
                         </ng-container>
                         <!-- Text columns -->
                         <ng-container *ngIf="col.type === 'text' || (!col.type && col.field !== 'id')">
@@ -193,11 +196,11 @@
                             >
                                 {{ customer.timeTaken }}
                             </span>
-                            <input *ngIf="col.field === 'assignUnit'" type="text" pInputText placeholder="" style="width: 180px" />
+                            <input *ngIf="col.field === 'assignUnit'" type="text" pInputText placeholder="" class="input-field" />
                             <span *ngIf="col.field === 'mediaType'">
                                 <div class="flex gap-2 items-center">
-                                    <button pButton type="button" label="Image" class="p-button-sm p-button-outlined pi pi-image" style="padding: 8px 8px; font-size: 12px"></button>
-                                    <button pButton type="button" label="Video" class="p-button-sm p-button-outlined pi pi-video" style="padding: 8px 8px; font-size: 12px"></button>
+                                    <button pButton type="button" label="Image" class="p-button-sm p-button-outlined pi pi-image media-button" style="padding: 8px 8px; font-size: 12px"></button>
+                                    <button pButton type="button" label="Video" class="p-button-sm p-button-outlined pi pi-video media-button" style="padding: 8px 8px; font-size: 12px"></button>
                                 </div>
                             </span>
                             <span
@@ -263,6 +266,7 @@
                             <div style="position: relative; display: inline-block; width: 150px">
                                 <select
                                     [(ngModel)]="customer.dropdownValue"
+                                    class="input-field"
                                     style="
                                         width: 100%;
                                         padding: 8px 32px 8px 12px;
@@ -284,7 +288,7 @@
                                 >
                                     <option *ngFor="let option of col.dropdownOptions || dropdownOptions" [ngValue]="option.value" [ngStyle]="{ background: '#e0f2fe', color: '#2563eb' }">{{ option.label }}</option>
                                 </select>
-                                <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none">
+                                <span style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); pointer-events: none">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
                                 </span>
                             </div>
@@ -407,3 +411,5 @@
 </p-dialog>
 
 <p-confirmDialog></p-confirmDialog>
+
+

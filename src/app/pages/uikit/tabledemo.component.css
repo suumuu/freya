@@ -162,6 +162,28 @@
     overflow: hidden !important;
 }
 
+/* Input field */
+
+.input-field {
+    width: 180px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    line-height: 1.2 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box;
+    display: block;
+    padding: 12px 16px!important;
+  }
+
+  .media-button{  
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+    display: flex;
+    align-items: center;
+    }
+  
+
 /* Specific styling for chip container in TYPE column */
 .chip-container {
     display: flex !important;
