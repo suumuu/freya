@@ -1,0 +1,28 @@
+<div class="filter-menu custom-filter-menu">
+  <div class="filter-menu-header">
+    <div class="filter-menu-header-row">
+      <span class="filter-menu-title text-gray-900">Select Item(s)</span>
+      <label class="filter-menu-selectall">
+        <input type="checkbox" [(ngModel)]="selectAll" (change)="onSelectAll()" class="filter-checkbox" />
+        <span class="filter-menu-selectall-label text-gray-600 text-sm font-medium">Select All</span>
+      </label>
+    </div>
+    
+      <app-search-bar
+        [value]="search"
+        (valueChange)="search = $event"
+        [placeholder]="'Search here'"
+        class="w-full"
+      ></app-search-bar>
+    
+  </div>
+  <div class="filter-menu-list">
+    <div *ngFor="let type of filteredOptions()" class="filter-menu-list-item">
+      <input type="checkbox" [id]="type.value" [value]="type.value" [(ngModel)]="selected" (change)="onTypeChange(type.value, $event)" class="filter-checkbox" />
+      <label [for]="type.value" class="filter-menu-list-label">{{ type.label }}</label>
+    </div>
+  </div>
+  <div class="filter-menu-footer">
+    <button type="button" (click)="apply()" class="filter-menu-apply-btn">Apply Filters</button>
+  </div>
+</div>

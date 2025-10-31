@@ -1,6 +1,8 @@
 // Removed stray applyTypeFilter definition outside the class
 import {Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import { SearchBarComponent } from '@/shared/components/search-bar.component';
+import { TypeFilterComponent } from '@/shared/components/type-filter.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {SelectModule} from 'primeng/select';
@@ -68,7 +70,9 @@ interface ColumnConfig {
     PaginatorModule,
     ConfirmDialogModule,
     DialogModule,
-    TypeFilterPipe
+    TypeFilterPipe,
+    SearchBarComponent,
+    TypeFilterComponent
 ],
     templateUrl: './tabledemo.component.html',
     styleUrls: ['./tabledemo.component.css'],

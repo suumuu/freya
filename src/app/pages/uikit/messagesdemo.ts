@@ -52,11 +52,12 @@ export class MessagesDemo implements OnInit {
         tableStyle?: { [key: string]: any };
     } = {
         columns: [
-            { field: 'id', header: 'SL', sortable: true, width: '80px', frozen: true },
+            { field: 'sl', header: 'SL', sortable: true, width: '80px', frozen: true },
             { field: 'id', header: 'ID', sortable: true, width: '150px' },
-            { field: 'country.name', header: 'DESCRIPTION IN ENGLISH', sortable: true, width: '250px' },
+            { field: 'english.description', header: 'DESCRIPTION IN ENGLISH', sortable: true, width: '250px' },
             { field: 'representative', header: 'CMR', filterable: true, width: '14rem' },
             { field: 'status', header: 'STATUS', sortable: true, filterable: true, width: '150px', type: 'status' },
+            { field: 'actions', header: 'ACTION', width: '85px', type: 'action' },
             { field: 'actions', header: 'ACTION', width: '85px', type: 'action', frozen: true, alignFrozen: 'right' }
         ],
         data: [],
